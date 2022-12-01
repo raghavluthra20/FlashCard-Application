@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import services.DataService;
 
 import java.io.IOException;
 
@@ -22,6 +23,9 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("Scene1.fxml"));
         Scene scene = new Scene(root);
+
+        // initialize data service
+        new DataService();
 
         Image icon = new Image("icon.png");
         stage.setTitle("Flash Card Application");

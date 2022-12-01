@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import services.DataService;
 
 import java.io.IOException;
 
@@ -21,6 +22,9 @@ public class Scene1Controller {
     private TextField usernameText;
 
     @FXML
+    private TextField passwordText;
+
+    @FXML
     private Button quitButton;
     @FXML
     private AnchorPane scenePane;
@@ -31,17 +35,22 @@ public class Scene1Controller {
 
     public void login(ActionEvent event) throws IOException {
         String username = usernameText.getText();
+        String password = passwordText.getText();
+        if(DataService.checkLoginCredentials(username, password)) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Scene2.fxml"));
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Scene2.fxml"));
+            root = loader.load();
 
-        root = loader.load();
+            Scene2Controller scene2Controller = loader.getController();
+            scene2Controller.setNameLabel(username);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        Scene2Controller scene2Controller = loader.getController();
-        scene2Controller.setNameLabel(username);
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-
-        scene = new Scene(root);
-        stage.setScene(scene);
+            scene = new Scene(root);
+            stage.setScene(scene);
+        }
+        else{//TODO: integrate with gui
+            System.out.println("Wrong username and/or password");
+        }
     }
 
     public void quit(ActionEvent event){
