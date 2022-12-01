@@ -13,9 +13,11 @@
             <Font size="50.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameText" layoutX="226.0" layoutY="187.0" promptText="Enter username" />
+      <TextField fx:id="usernameText" layoutX="225.0" layoutY="147.0" promptText="Enter username" />
       <Button fx:id="loginButton" layoutX="277.0" layoutY="263.0" mnemonicParsing="false" onAction="#login" text="Login" />
-      <Label layoutX="154.0" layoutY="191.0" text="Username:" />
+      <Label layoutX="155.0" layoutY="151.0" text="Username:" />
       <Button fx:id="quitButton" layoutX="248.0" layoutY="334.0" mnemonicParsing="false" onAction="#quit" text="Quit Application" />
+      <TextField fx:id="passwordText" layoutX="225.0" layoutY="187.0" promptText="Enter Password" />
+      <Label layoutX="155.0" layoutY="191.0" text="Password" />
    </children>
 </AnchorPane>
