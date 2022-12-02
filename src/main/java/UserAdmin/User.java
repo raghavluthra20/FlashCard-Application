@@ -5,13 +5,24 @@ import models.Category;
 import models.Deck;
 import models.cardFactory.cardGenerator;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class User implements Comparable{
+public class User implements Comparable<User>{
+
+    private ArrayList<Category> categories;
     private int contributions;
     private int activity;
     private final String username;
     private final String password;
+
+    public ArrayList<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(ArrayList<Category> categories) {
+        this.categories = categories;
+    }
 
     public User(String username, String password)
     {
@@ -19,11 +30,13 @@ public class User implements Comparable{
         this.password = password;
         this.contributions = 0;
         this.activity = 0;
+        this.categories = new ArrayList<>();
     }
 
     public Category createNewCategory(String name)
     {
-        return new Category(name);
+        Category category = new Category(name);
+        return category;
     }
 
     public Card createCard(Category category)
@@ -86,10 +99,8 @@ public class User implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o) {
-        User otherUser = (User) (o);
-
+    public int compareTo(User otherUser) {
         // multiplying with -1 since we want to sort in descending order of contributions
-        return -1 * Integer.compare(this.contributions, otherUser.getContributions());
+        return -1 * Integer.compare(this.getContributions(), otherUser.getContributions());
     }
 }
