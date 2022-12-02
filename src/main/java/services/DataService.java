@@ -1,13 +1,18 @@
 package services;
 
-import java.util.HashMap;
-import java.util.Objects;
+import UserAdmin.User;
+
+import java.util.*;
 
 public class DataService {
     private static HashMap<String, String> userData;
+    private static SortedSet<User> userList;
     public DataService() {
         userData = new HashMap<>();
+        userList = new TreeSet<>();
+
         userData.put("TestUser", "testing321");
+        userList.add(new User("TestUser", "testing321"));
     }
 
     public static boolean checkLoginCredentials(String username, String password) {
@@ -17,9 +22,26 @@ public class DataService {
     public static void addUser(String username, String password) {
         if(!userData.containsKey(username)) {
             userData.put(username, password);
+            User user = new User(username, password);
+            userList.add(user);
         } else {
             System.out.println("Username already taken.");
         }
     }
 
+    public ArrayList<User> getTopContributors() {
+        int contributorSize = 5;
+
+        if(userList.size() < contributorSize)
+            return new ArrayList<User>(userList);
+
+
+        ArrayList<User> topContributors = new ArrayList<>();
+        for (User user : userList) {
+            if (topContributors.size() >= contributorSize)
+                break;
+            topContributors.add(user);
+        }
+        return topContributors;
+    }
 }
