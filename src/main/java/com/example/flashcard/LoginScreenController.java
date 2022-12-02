@@ -39,17 +39,16 @@ public class LoginScreenController {
         String password = passwordText.getText();
         if(DataService.checkLoginCredentials(username, password)) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("UserHomeScreen.fxml"));
-            UserHomeScreenController userHomeScreenController = new UserHomeScreenController();
-//            userHomeScreenController.setUser(new User(username));//TODO: change COMPLETELY and integrate with server
 
 
             root = loader.load();
             stage = new Stage();
 
             scene = new Scene(root);
+            ((UserHomeScreenController)loader.getController()).setUser(new User(username,password));//TODO: change setUser to check if user already exists
+            //TODO: change COMPLETELY and integrate with server
             stage.setScene(scene);
             stage.show();
-//            userHomeScreenController.initialize();
             //TODO: to make sure same user does not login more than once
         }
         else{//TODO: integrate with gui
