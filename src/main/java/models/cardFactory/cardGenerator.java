@@ -3,7 +3,10 @@ package models.cardFactory;
 
 import models.Card;
 import models.Category;
-import models.cards.*;
+import models.cards.DefCard;
+import models.cards.FIBCard;
+import models.cards.MCQCard;
+import models.cards.TFCard;
 
 public class cardGenerator {
     public Card newCard(String question, String answer, Category category, String cardType)
