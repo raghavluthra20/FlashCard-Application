@@ -1,5 +1,6 @@
 package com.example.flashcard;
 
+import UserAdmin.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +14,7 @@ import services.DataService;
 
 import java.io.IOException;
 
-public class Scene1Controller {
+public class LoginScreenController {
 
     @FXML
     private Button loginButton;
@@ -37,16 +38,19 @@ public class Scene1Controller {
         String username = usernameText.getText();
         String password = passwordText.getText();
         if(DataService.checkLoginCredentials(username, password)) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Scene2.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("UserHomeScreen.fxml"));
+            UserHomeScreenController userHomeScreenController = new UserHomeScreenController();
+//            userHomeScreenController.setUser(new User(username));//TODO: change COMPLETELY and integrate with server
+
 
             root = loader.load();
-
-            Scene2Controller scene2Controller = loader.getController();
-            scene2Controller.setNameLabel(username);
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage = new Stage();
 
             scene = new Scene(root);
             stage.setScene(scene);
+            stage.show();
+//            userHomeScreenController.initialize();
+            //TODO: to make sure same user does not login more than once
         }
         else{//TODO: integrate with gui
             System.out.println("Wrong username and/or password");

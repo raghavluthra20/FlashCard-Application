@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flashcard.Scene1Controller">
+<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flashcard.LoginScreenController">
    <children>
       <Label alignment="CENTER" layoutX="137.0" layoutY="14.0" prefHeight="74.0" prefWidth="326.0" text="Login Page" textAlignment="CENTER">
          <font>
@@ -14,10 +14,11 @@
          </font>
       </Label>
       <TextField fx:id="usernameText" layoutX="225.0" layoutY="147.0" promptText="Enter username" />
-      <Button fx:id="loginButton" layoutX="277.0" layoutY="263.0" mnemonicParsing="false" onAction="#login" text="Login" />
       <Label layoutX="155.0" layoutY="151.0" text="Username:" />
-      <Button fx:id="quitButton" layoutX="248.0" layoutY="334.0" mnemonicParsing="false" onAction="#quit" text="Quit Application" />
       <TextField fx:id="passwordText" layoutX="225.0" layoutY="187.0" promptText="Enter Password" />
       <Label layoutX="155.0" layoutY="191.0" text="Password" />
+      <Button fx:id="loginButton" layoutX="161.0" layoutY="271.0" mnemonicParsing="false" onAction="#login" text="Login as User" />
+      <Button layoutX="350.0" layoutY="271.0" mnemonicParsing="false" text="Login as Admin" />
+      <Button fx:id="quitButton" layoutX="248.0" layoutY="335.0" mnemonicParsing="false" onAction="#quit" text="Quit Application" />
    </children>
 </AnchorPane>
