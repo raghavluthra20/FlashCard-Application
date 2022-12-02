@@ -19,17 +19,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class UserHomeScreenController {
+public class UserHomeScreenController implements Initializable{
 
     private User user;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {//TODO: link with login page
-        this.user = user;
-    }
 
     @FXML
     private Label nameLabel;
@@ -48,6 +40,16 @@ public class UserHomeScreenController {
 
     private Scene scene;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {//TODO: link with login page
+        this.user = user;
+        categoryList.getItems().addAll(getUser().getCategories());
+        setNameLabel(getUser().getUsername());
+    }
+
     public void setNameLabel(String name) {
         nameLabel.setText("Hello " + name);
     }
@@ -55,6 +57,7 @@ public class UserHomeScreenController {
     public void editCategoryList(String categoryName) {
         categoryList.getItems().addAll(new Category(categoryName));
         user.setCategories(new ArrayList<>(categoryList.getItems()));
+        System.out.println(user.getCategories());//TODO:remove later!
     }
 
     public void logout(ActionEvent event) throws IOException {
@@ -68,9 +71,12 @@ public class UserHomeScreenController {
     }
 
     public void createCategoryAction(ActionEvent event) {
+        // if user enters empty string or whitespaces, then don't create a category
+        if(newCategoryName.getText().trim().equals(""))
+            return;
+
         editCategoryList(newCategoryName.getText());
         newCategoryName.setText("");
-
         //TODO: integrate with Category class
         //TODO: make sure ki same name waale categories na bane
     }
@@ -86,17 +92,27 @@ public class UserHomeScreenController {
         stage.setScene(scene1);
     }
 
-    /*public void initialize() {
-        categoryList.getItems().addAll(user.getCategories());
+    public void initialize(){
+        try{
+            setNameLabel(user.getUsername());
+            categoryList.getItems().addAll(user.getCategories());
 
+        }
+        catch (Exception e)//TODO:custom exception??
+        {
+            System.out.println("Error during listview init");
+        }
+    }
 
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
         categoryList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Category>() {
 
             @Override
             public void changed(ObservableValue<? extends Category> arg0, Category arg1, Category arg2) {
-
                 Category category = categoryList.getSelectionModel().getSelectedItem();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("CategoryScreen.fxml"));
+                System.out.println("ListView Item Selected");
                 Parent root = null;
                 try {
                     root = loader.load();
@@ -107,10 +123,11 @@ public class UserHomeScreenController {
                 categoryScreenController.setUser(getUser());
                 categoryScreenController.setCategory(category);
                 Scene scene = new Scene(root);
-                Stage stage = (Stage)categoryList.getScene().getWindow();
+                Stage stage = (Stage) categoryList.getScene().getWindow();
                 stage.setScene(scene);
             }
         });
-    }*/
+    }
+
 }
 //TODO: activity map top contributors my contributions integrate with gui
