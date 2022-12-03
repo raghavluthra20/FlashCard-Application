@@ -137,7 +137,7 @@ public class DataService {
     }
 
     public ArrayList<User> getTopContributors() {
-        int contributorSize = 5;
+        int contributorSize = 3;
 
         // create a list to users from hashset
         ArrayList<User> userArrayList = new ArrayList<>(userList);
