@@ -17,8 +17,9 @@
       <Label layoutX="155.0" layoutY="151.0" text="Username:" />
       <TextField fx:id="passwordText" layoutX="225.0" layoutY="187.0" promptText="Enter Password" />
       <Label layoutX="155.0" layoutY="191.0" text="Password" />
-      <Button fx:id="loginButton" layoutX="161.0" layoutY="271.0" mnemonicParsing="false" onAction="#login" text="Login as User" />
-      <Button layoutX="350.0" layoutY="271.0" mnemonicParsing="false" text="Login as Admin" />
+      <Button fx:id="loginButton" layoutX="161.0" layoutY="271.0" mnemonicParsing="false" onAction="#login" text="Login" />
+      <Button fx:id="registerButton" layoutX="350.0" layoutY="271.0" mnemonicParsing="false" onAction="#register" text="Register" />
       <Button fx:id="quitButton" layoutX="248.0" layoutY="335.0" mnemonicParsing="false" onAction="#quit" text="Quit Application" />
+      <Label fx:id="errorSuccessMessage" layoutX="203.0" layoutY="237.0" prefHeight="18.0" prefWidth="236.0" textFill="LIME" wrapText="true" />
    </children>
 </AnchorPane>

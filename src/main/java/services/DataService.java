@@ -7,10 +7,10 @@ import java.util.*;
 public class DataService {
     private static DataService instance;
     private HashMap<String, String> userData;
-    private SortedSet<User> userList;
+    private HashSet<User> userList;
     private DataService() {
         userData = new HashMap<>();
-        userList = new TreeSet<>();
+        userList = new HashSet<>();
 
         userData.put("TestUser", "testing321");
         userList.add(new User("TestUser", "testing321"));
@@ -23,29 +23,46 @@ public class DataService {
         return instance;
     }
 
+    // checks if user exists or not and if password and username match
     public boolean checkLoginCredentials(String username, String password) {
-        return Objects.equals(userData.get(username), password);
+        if(!userData.containsKey(username))
+            return false;
+
+        return userData.get(username).equals(password);
     }
 
-    public void addUser(String username, String password) {
-        if(!userData.containsKey(username)) {
-            userData.put(username, password);
-            User user = new User(username, password);
-            userList.add(user);
-        } else {
+    public boolean registerUser(String username, String password) {
+        if(userData.containsKey(username)) {
             System.out.println("Username already taken.");
+            return false;
         }
+
+        User user = new User(username, password);
+        userList.add(user);
+        userData.put(username, password);
+        return true;
     }
 
+    public User findUser(String username) {
+        for(User user : userList) {
+            if(user.getUsername().equals(username))
+                return user;
+        }
+        System.out.println(userList);
+        return null;
+    }
     public ArrayList<User> getTopContributors() {
         int contributorSize = 5;
 
-        if(userList.size() < contributorSize)
-            return new ArrayList<User>(userList);
+        // create a list to users from hashset
+        ArrayList<User> userArrayList = new ArrayList<>(userList);
+        Collections.sort(userArrayList);
 
+        if(userList.size() < contributorSize)
+            return userArrayList;
 
         ArrayList<User> topContributors = new ArrayList<>();
-        for (User user : userList) {
+        for (User user : userArrayList) {
             if (topContributors.size() >= contributorSize)
                 break;
             topContributors.add(user);

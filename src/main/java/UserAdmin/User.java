@@ -36,6 +36,7 @@ public class User implements Comparable<User>{
     public Category createNewCategory(String name)
     {
         Category category = new Category(name);
+        categories.add(category);
         return category;
     }
 
@@ -96,6 +97,11 @@ public class User implements Comparable<User>{
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String toString() {
+        return "User [username= " + getUsername() + ", password= " + getPassword() + "]";
     }
 
     @Override
