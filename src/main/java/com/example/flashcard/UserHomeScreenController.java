@@ -40,6 +40,20 @@ public class UserHomeScreenController implements Initializable{
     @FXML
     private Button createCategoryButton;
 
+    @FXML
+    private Label activityLabel;
+
+    @FXML
+    private Label contributionsLabel;
+
+    // top 3 contributors
+    @FXML
+    private Label contributor_1;
+    @FXML
+    private Label contributor_2;
+    @FXML
+    private Label contributor_3;
+
     private Scene scene;
 
     public User getUser() {
@@ -50,6 +64,15 @@ public class UserHomeScreenController implements Initializable{
         this.user = user;
         categoryList.getItems().addAll(DataService.getInstance().getCategories());
         setNameLabel(user.getUsername());
+
+        activityLabel.setText(Integer.toString(user.getActivity()));
+        contributionsLabel.setText(Integer.toString(user.getContributions()));
+
+        // set top contributors
+        ArrayList<User> topUsers = DataService.getInstance().getTopContributors();
+        contributor_1.setText("1. " + topUsers.get(0).getUsername() + ": " + Integer.toString(topUsers.get(0).getContributions()));
+        contributor_2.setText("2. " + topUsers.get(1).getUsername() + ": " + Integer.toString(topUsers.get(1).getContributions()));
+        contributor_3.setText("3. " + topUsers.get(2).getUsername() + ": " + Integer.toString(topUsers.get(2).getContributions()));
     }
 
     public void setNameLabel(String name) {
@@ -73,6 +96,7 @@ public class UserHomeScreenController implements Initializable{
         alert.setHeaderText("User Log-out Confirmation");
         alert.setContentText("Are you sure you want to log out?");
         if (alert.showAndWait().get() == ButtonType.OK) {
+            user.setLoggedIn(false);
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
         }
     }
