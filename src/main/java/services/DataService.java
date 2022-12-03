@@ -5,9 +5,10 @@ import UserAdmin.User;
 import java.util.*;
 
 public class DataService {
-    private static HashMap<String, String> userData;
-    private static SortedSet<User> userList;
-    public DataService() {
+    private static DataService instance;
+    private HashMap<String, String> userData;
+    private SortedSet<User> userList;
+    private DataService() {
         userData = new HashMap<>();
         userList = new TreeSet<>();
 
@@ -15,11 +16,18 @@ public class DataService {
         userList.add(new User("TestUser", "testing321"));
     }
 
-    public static boolean checkLoginCredentials(String username, String password) {
+    synchronized public static DataService getInstance() {
+        if(instance == null)
+            instance = new DataService();
+
+        return instance;
+    }
+
+    public boolean checkLoginCredentials(String username, String password) {
         return Objects.equals(userData.get(username), password);
     }
 
-    public static void addUser(String username, String password) {
+    public void addUser(String username, String password) {
         if(!userData.containsKey(username)) {
             userData.put(username, password);
             User user = new User(username, password);
