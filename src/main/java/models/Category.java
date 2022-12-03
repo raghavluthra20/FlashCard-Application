@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Category{//TODO: id
 
     private int id;
-    private String name;
     private ArrayList<Deck> decks;
+    private String name;
 
     public Category(String name) {
         this.name = name;

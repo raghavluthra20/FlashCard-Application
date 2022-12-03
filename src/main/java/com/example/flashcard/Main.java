@@ -18,16 +18,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
-        Scene scene = new Scene(root);
-
-        Image icon = new Image("icon.png");
-        stage.setTitle("Flash Card Application");
-        stage.getIcons().add(icon);
-        stage.setResizable(false);
-//        stage.setFullScreenExitHint("");
-//        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-        stage.setScene(scene);
-        stage.show();
+        SceneHandler.getInstance().launchLoginScreen(stage);
     }
 }
+//TODO: add changed functionality for x button in all scenes

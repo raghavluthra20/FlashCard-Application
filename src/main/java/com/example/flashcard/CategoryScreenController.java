@@ -1,12 +1,17 @@
 package com.example.flashcard;
 
 import UserAdmin.User;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import models.Category;
+import java.io.IOException;
 
 public class CategoryScreenController {
 
@@ -49,6 +54,20 @@ public class CategoryScreenController {
     @FXML
     private Label categoryNameLabel;
 
+    @FXML
+    private Button goBackButton;
 
+    private Scene previousScene;
 
+    public Scene getPreviousScene() {
+        return previousScene;
+    }
+
+    public void setPreviousScene(Scene previousScene) {
+        this.previousScene = previousScene;
+    }
+
+    public void goBack(ActionEvent event) throws IOException {
+        SceneHandler.getInstance().switchToScene((Stage)((Node)event.getSource()).getScene().getWindow(),previousScene);
+    }
 }

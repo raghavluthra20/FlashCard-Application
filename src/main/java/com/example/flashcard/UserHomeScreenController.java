@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import models.Category;
+import services.DataService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,7 +48,7 @@ public class UserHomeScreenController implements Initializable{
 
     public void setUser(User user) {//TODO: link with login page
         this.user = user;
-        categoryList.getItems().addAll(user.getCategories());
+        categoryList.getItems().addAll(DataService.getInstance().getCategories());
         setNameLabel(user.getUsername());
     }
 
@@ -56,10 +57,14 @@ public class UserHomeScreenController implements Initializable{
     }
 
     public void editCategoryList(String categoryName) {
-        Category newCategory = user.createNewCategory(categoryName);
-        categoryList.getItems().addAll(newCategory);
+        Category newCategory = DataService.getInstance().createNewCategory(categoryName);
 
-        System.out.println(user.getCategories());//TODO:remove later!
+        // if category already exists, then return
+        if(newCategory == null)
+            return;
+
+        categoryList.getItems().addAll(newCategory);
+        System.out.println(DataService.getInstance().getCategories()); //TODO:remove later!
     }
 
     public void logout(ActionEvent event) throws IOException {
@@ -94,18 +99,6 @@ public class UserHomeScreenController implements Initializable{
         stage.setScene(scene1);
     }
 
-    // This method is never called, why is it here?
-    public void initialize(){
-        try{
-            setNameLabel(user.getUsername());
-            categoryList.getItems().addAll(user.getCategories());
-
-        } catch (Exception e)//TODO:custom exception??
-        {
-            System.out.println("Error during listview init");
-        }
-    }
-
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 //        categoryList.getItems().addAll(getUser().getCategories());
@@ -114,20 +107,9 @@ public class UserHomeScreenController implements Initializable{
             @Override
             public void changed(ObservableValue<? extends Category> arg0, Category arg1, Category arg2) {
                 Category category = categoryList.getSelectionModel().getSelectedItem();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("CategoryScreen.fxml"));
                 System.out.println("ListView Item Selected");
-                Parent root = null;
-                try {
-                    root = loader.load();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }//TODO: add custom exception
-                CategoryScreenController categoryScreenController = loader.getController();
-                categoryScreenController.setUser(user);
-                categoryScreenController.setCategory(category);
-                Scene scene = new Scene(root);
-                Stage stage = (Stage) categoryList.getScene().getWindow();
-                stage.setScene(scene);
+                SceneHandler.getInstance().switchToCategoryScreen((Stage) categoryList.getScene().getWindow(),categoryList.getScene(),getUser(),category);
+
             }
         });
     }
