@@ -37,7 +37,7 @@ public class LoginScreenController {
     public void login(ActionEvent event) throws IOException {
         String username = usernameText.getText();
         String password = passwordText.getText();
-        if(DataService.checkLoginCredentials(username, password)) {
+        if(DataService.getInstance().checkLoginCredentials(username, password)) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("UserHomeScreen.fxml"));
 
 
