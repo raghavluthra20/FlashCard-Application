@@ -3,6 +3,7 @@ package com.example.flashcard;
 import UserAdmin.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,22 +42,23 @@ public class UserHomeScreenController implements Initializable{
     private Scene scene;
 
     public User getUser() {
-        return user;
+        return this.user;
     }
 
     public void setUser(User user) {//TODO: link with login page
         this.user = user;
-        categoryList.getItems().addAll(getUser().getCategories());
-        setNameLabel(getUser().getUsername());
+        categoryList.getItems().addAll(user.getCategories());
+        setNameLabel(user.getUsername());
     }
 
     public void setNameLabel(String name) {
-        nameLabel.setText("Hello " + name);
+        nameLabel.setText("Hello, " + name);
     }
 
     public void editCategoryList(String categoryName) {
-        categoryList.getItems().addAll(new Category(categoryName));
-        user.setCategories(new ArrayList<>(categoryList.getItems()));
+        Category newCategory = user.createNewCategory(categoryName);
+        categoryList.getItems().addAll(newCategory);
+
         System.out.println(user.getCategories());//TODO:remove later!
     }
 
@@ -87,18 +89,18 @@ public class UserHomeScreenController implements Initializable{
         Scene scene1 = new Scene(root);
 
         CategoryScreenController categoryScreenController = loader.getController();
-        categoryScreenController.setUser(getUser());
+        categoryScreenController.setUser(user);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene1);
     }
 
+    // This method is never called, why is it here?
     public void initialize(){
         try{
             setNameLabel(user.getUsername());
             categoryList.getItems().addAll(user.getCategories());
 
-        }
-        catch (Exception e)//TODO:custom exception??
+        } catch (Exception e)//TODO:custom exception??
         {
             System.out.println("Error during listview init");
         }
@@ -106,6 +108,7 @@ public class UserHomeScreenController implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+//        categoryList.getItems().addAll(getUser().getCategories());
         categoryList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Category>() {
 
             @Override
@@ -120,7 +123,7 @@ public class UserHomeScreenController implements Initializable{
                     throw new RuntimeException(e);
                 }//TODO: add custom exception
                 CategoryScreenController categoryScreenController = loader.getController();
-                categoryScreenController.setUser(getUser());
+                categoryScreenController.setUser(user);
                 categoryScreenController.setCategory(category);
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) categoryList.getScene().getWindow();

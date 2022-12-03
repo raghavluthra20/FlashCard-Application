@@ -4,11 +4,11 @@ import UserAdmin.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import services.DataService;
 
@@ -30,6 +30,9 @@ public class LoginScreenController {
     @FXML
     private AnchorPane scenePane;
 
+    @FXML
+    private Label errorSuccessMessage;
+
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -37,6 +40,7 @@ public class LoginScreenController {
     public void login(ActionEvent event) throws IOException {
         String username = usernameText.getText();
         String password = passwordText.getText();
+        // check if user exists and password matches
         if(DataService.getInstance().checkLoginCredentials(username, password)) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("UserHomeScreen.fxml"));
 
@@ -45,14 +49,30 @@ public class LoginScreenController {
             stage = new Stage();
 
             scene = new Scene(root);
-            ((UserHomeScreenController)loader.getController()).setUser(new User(username,password));//TODO: change setUser to check if user already exists
+
+            User user = DataService.getInstance().findUser(username);
+            ((UserHomeScreenController)loader.getController()).setUser(user);//TODO: change setUser to check if user already exists
             //TODO: change COMPLETELY and integrate with server
             stage.setScene(scene);
             stage.show();
             //TODO: to make sure same user does not login more than once
         }
-        else{//TODO: integrate with gui
+        else{
             System.out.println("Wrong username and/or password");
+            errorSuccessMessage.setText("username and password don't match");
+            errorSuccessMessage.setTextFill(Paint.valueOf("#ff0000")); // RED color
+        }
+    }
+
+    public void register(ActionEvent event) {
+        String username = usernameText.getText();
+        String password = passwordText.getText();
+        if(!DataService.getInstance().registerUser(username, password)) {
+            errorSuccessMessage.setText("Username already taken.");
+            errorSuccessMessage.setTextFill(Paint.valueOf("#ff0000")); // RED color
+        } else {
+            errorSuccessMessage.setText("User successfully created!");
+            errorSuccessMessage.setTextFill(Paint.valueOf("#00ff00")); // GREEN color
         }
     }
 
