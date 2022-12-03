@@ -42,20 +42,8 @@ public class LoginScreenController {
         String password = passwordText.getText();
         // check if user exists and password matches
         if(DataService.getInstance().checkLoginCredentials(username, password)) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("UserHomeScreen.fxml"));
-
-
-            root = loader.load();
-            stage = new Stage();
-
-            scene = new Scene(root);
-
             User user = DataService.getInstance().findUser(username);
-            ((UserHomeScreenController)loader.getController()).setUser(user);//TODO: change setUser to check if user already exists
-            //TODO: change COMPLETELY and integrate with server
-            stage.setScene(scene);
-            stage.show();
-            //TODO: to make sure same user does not login more than once
+            SceneHandler.getInstance().switchToUserHomeScreen(user,null,null);
         }
         else{
             System.out.println("Wrong username and/or password");

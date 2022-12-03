@@ -4,25 +4,17 @@ import models.Card;
 import models.Category;
 import models.Deck;
 import models.cardFactory.cardGenerator;
+import services.DataService;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class User implements Comparable<User>{
-
-    private ArrayList<Category> categories;
+public class User implements Comparable<User> {
     private int contributions;
     private int activity;
     private final String username;
     private final String password;
-
-    public ArrayList<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(ArrayList<Category> categories) {
-        this.categories = categories;
-    }
+    private ArrayList<Deck> decks;
 
     public User(String username, String password)
     {
@@ -30,14 +22,7 @@ public class User implements Comparable<User>{
         this.password = password;
         this.contributions = 0;
         this.activity = 0;
-        this.categories = new ArrayList<>();
-    }
-
-    public Category createNewCategory(String name)
-    {
-        Category category = new Category(name);
-        categories.add(category);
-        return category;
+        this.decks = new ArrayList<>();
     }
 
     public Card createCard(Category category)
@@ -63,7 +48,8 @@ public class User implements Comparable<User>{
         if(deck.isPublic())
             return;
 
-        deck.setPublic(true);
+        deck.makePublic();
+        DataService.getInstance().registerPublicDeck(deck);
 
         // update contributions
         contributions = contributions + deck.getSize();
@@ -97,6 +83,10 @@ public class User implements Comparable<User>{
 
     public String getPassword() {
         return password;
+    }
+
+    public ArrayList<Deck> getDecks() {
+        return this.decks;
     }
 
     @Override

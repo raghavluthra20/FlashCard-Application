@@ -1,5 +1,8 @@
 package models;
 
+import UserAdmin.User;
+import services.DataService;
+
 import java.util.ArrayList;
 
 public class Deck {
@@ -18,11 +21,17 @@ public class Deck {
         this.name = name;
         this.isPublic = isPublic;
         this.cards = new ArrayList<Card>();
+
+        if(isPublic) {
+            DataService.getInstance().registerPublicDeck(this);
+        }
     }
 
     public int addCard(Card card) {
-        if(this.cards.add(card))
+        // TODO: if deck is public, change contributions
+        if(this.cards.add(card)) {
             return card.getId();
+        }
 
         // TODO: throw custom exception
         return -1;
@@ -69,8 +78,8 @@ public class Deck {
         return isPublic;
     }
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
+    public void makePublic() {
+        isPublic = true;
     }
 
     @Override
