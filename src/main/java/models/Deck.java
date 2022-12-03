@@ -9,22 +9,24 @@ public class Deck {
     private int id;
     private String name;
     private boolean isPublic;
-    private ArrayList<Card> cards;
-    // TODO: user - add getter
 
-    public Deck(String name)
+    private final Category category;
+    private ArrayList<Card> cards;
+
+    public Deck(String name,Category category)
     {
-        this(name,false);
+        this(name,false,category);
     }
 
-    public Deck(String name, boolean isPublic) {
+    public Deck(String name, boolean isPublic, Category category) {
         this.name = name;
         this.isPublic = isPublic;
         this.cards = new ArrayList<Card>();
+        this.category = category;
 
-        if(isPublic) {
-            DataService.getInstance().registerPublicDeck(this);
-        }
+//        if(isPublic) {
+//            DataService.getInstance().registerPublicDeck(this);
+//        }
     }
 
     public int addCard(Card card) {
@@ -74,6 +76,10 @@ public class Deck {
         this.name = name;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
     public boolean isPublic() {
         return isPublic;
     }
@@ -84,6 +90,7 @@ public class Deck {
 
     @Override
     public String toString() {
-        return "Deck [name=" + name + ", cards=" + cards + "]";
+//        return "Deck [name=" + name + ", cards=" + cards + "]";
+        return "Deck [name=" + name + "]";
     }
 }

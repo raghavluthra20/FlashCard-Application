@@ -19,8 +19,56 @@ public class DataService {
         categories = new ArrayList<>();
         publicDecks = new ArrayList<>();
 
-        userData.put("TestUser", "testing321");
-        userList.add(new User("TestUser", "testing321"));
+        // create users
+        userData.put("cordelia", "testing321");
+        User testUser = new User("cordelia", "testing321");
+        userList.add(testUser);
+
+        userData.put("othello", "testing321");
+        User othello = new User("othello", "testing321");
+        userList.add(othello);
+
+        userData.put("iago", "testing321");
+        User iago = new User("Iago", "testing321");
+        userList.add(iago);
+
+        // Create mock Categories
+        Category math = new Category("Mathematics");
+        Category biology = new Category("Biology");
+        Category chem = new Category("Chemistry");
+        categories.add(math);
+        categories.add(biology);
+        categories.add(chem);
+
+        // create mock public decks
+        Deck deck1 = new Deck("Deck1", true, math);
+        Deck deck2 = new Deck("Deck2", true, math);
+        othello.addNewDeck(deck1);
+        othello.addNewDeck(deck2);
+
+        Deck deck3 = new Deck("Deck3", true, biology);
+        Deck deck4 = new Deck("Deck4", true, biology);
+        iago.addNewDeck(deck3);
+        iago.addNewDeck(deck4);
+
+        Deck deck5 = new Deck("Deck5", true, chem);
+        Deck deck6 = new Deck("Deck6", true, chem);
+        iago.addNewDeck(deck5);
+        testUser.addNewDeck(deck6);
+
+        registerPublicDeck(deck1);
+        registerPublicDeck(deck2);
+        registerPublicDeck(deck3);
+        registerPublicDeck(deck4);
+        registerPublicDeck(deck5);
+        registerPublicDeck(deck6);
+
+        // create mock private decks
+        Deck deck7 = new Deck("private1", math);
+        othello.addNewDeck(deck7);
+
+        Deck deck8 = new Deck("private 2", math);
+        othello.addNewDeck(deck8);
     }
 
     synchronized public static DataService getInstance() {
@@ -105,5 +153,9 @@ public class DataService {
             topContributors.add(user);
         }
         return topContributors;
+    }
+
+    public ArrayList<Deck> getPublicDecks() {
+        return publicDecks;
     }
 }

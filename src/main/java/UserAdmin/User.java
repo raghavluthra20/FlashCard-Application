@@ -14,6 +14,7 @@ public class User implements Comparable<User> {
     private int activity;
     private final String username;
     private final String password;
+    private boolean isLoggedIn;
     private ArrayList<Deck> decks;
 
     public User(String username, String password)
@@ -85,8 +86,20 @@ public class User implements Comparable<User> {
         return password;
     }
 
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
+    }
+
     public ArrayList<Deck> getDecks() {
         return this.decks;
+    }
+
+    public void addNewDeck(Deck deck) {
+        decks.add(deck);
     }
 
     @Override

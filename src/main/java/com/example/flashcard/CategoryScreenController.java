@@ -11,7 +11,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import models.Category;
+import models.Deck;
+import services.DataService;
+
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CategoryScreenController {
 
@@ -24,6 +28,16 @@ public class CategoryScreenController {
 
     public void setCategory(Category category) {
         this.category = category;
+        categoryNameLabel.setText(category.getName());
+
+        // only show decks belonging to category
+        ArrayList<Deck> allPublicDecks = DataService.getInstance().getPublicDecks();
+        ArrayList<Deck> categoryPublicDecks = new ArrayList<>();
+        for(Deck d : allPublicDecks) {
+            if(d.getCategory() == category)
+                categoryPublicDecks.add(d);
+        }
+        publicDeckList.getItems().addAll(categoryPublicDecks);
     }
 
     public User getUser() {
@@ -32,6 +46,14 @@ public class CategoryScreenController {
 
     public void setUser(User user) {
         this.user = user;
+        deckNumber.setText(Integer.toString(user.getDecks().size()));
+
+        ArrayList<Deck> privateDecks = new ArrayList<>();
+        for(Deck d : user.getDecks()) {
+            if(!d.isPublic())
+                privateDecks.add(d);
+        }
+        myDeckList.getItems().addAll(privateDecks);
     }
 
     @FXML
@@ -41,9 +63,9 @@ public class CategoryScreenController {
     @FXML
     private Button createPrivateDeckButton;
     @FXML
-    private ListView<String> myDeckList;
+    private ListView<Deck> myDeckList;
     @FXML
-    private ListView<String> otherPublicDeckList;
+    private ListView<Deck> publicDeckList;
     @FXML
     private Button viewMyListButton;
     @FXML
@@ -53,6 +75,9 @@ public class CategoryScreenController {
 
     @FXML
     private Label categoryNameLabel;
+
+    @FXML
+    private Label deckNumber;
 
     @FXML
     private Button goBackButton;
@@ -70,4 +95,17 @@ public class CategoryScreenController {
     public void goBack(ActionEvent event) throws IOException {
         SceneHandler.getInstance().switchToScene((Stage)((Node)event.getSource()).getScene().getWindow(),previousScene);
     }
+
+    public void createPublicDeck(ActionEvent event) {
+        String name = newDeckName.getText();
+        Deck deck = new Deck(name, true, category);
+        DataService.getInstance().registerPublicDeck(deck);
+    }
+
+    public void createPrivateDeck(ActionEvent event) {
+        String name = newDeckName.getText();
+        Deck deck = new Deck(name, category);
+        user.addNewDeck(deck);
+    }
+
 }

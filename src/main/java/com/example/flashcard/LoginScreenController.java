@@ -43,7 +43,12 @@ public class LoginScreenController {
         // check if user exists and password matches
         if(DataService.getInstance().checkLoginCredentials(username, password)) {
             User user = DataService.getInstance().findUser(username);
+            // if user is already logged in, then return
+            if(user.isLoggedIn())
+                return;
+
             SceneHandler.getInstance().switchToUserHomeScreen(user,null,null);
+            user.setLoggedIn(true);
         }
         else{
             System.out.println("Wrong username and/or password");
