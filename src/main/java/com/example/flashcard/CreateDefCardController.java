@@ -1,5 +1,6 @@
 package com.example.flashcard;
 
+import UserAdmin.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import models.Card;
 import models.CardType;
 import models.Deck;
 import models.cardFactory.CardGenerator;
+import services.AdminService;
 
 import java.io.IOException;
 
@@ -46,6 +48,14 @@ public class CreateDefCardController {
 
     @FXML
     private TextArea questionText;
+    private User user;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(String username) {
+        this.user = AdminService.getInstance().findUser(username);
+    }
 
     public  void createCard(ActionEvent event)
     {//TODO: custom exception
@@ -59,7 +69,11 @@ public class CreateDefCardController {
         System.out.println(previousScene.getUserData() instanceof FXMLLoader);//TODO: custom exception
         ((DeckSceneController)((FXMLLoader)previousScene.getUserData()).getController()).setCards();
         System.out.println("new card added in deck");
-
+        if(deck.isPublic())
+        {
+            user.setContributions(user.getContributions() + 1);
+        }
+        System.out.println("Contributions appended");
         goBackButton.fire();
     }
 

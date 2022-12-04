@@ -50,23 +50,21 @@ public class User implements Comparable<User> {
 
 
     public int getContributions() {
-        int count = 0;
-        for(Deck deck : decks) {
-            if(deck.isPublic())
-                count = count + deck.getSize();
-        }
-        this.contributions = count;
-
-        System.out.println("user= " + username + ", contributions= " + contributions);
         return contributions;
+    }
+
+    public void setContributions(int contributions) {
+        this.contributions = contributions;
+        if(this.contributions < 0)
+            this.contributions = 0;
     }
 
     public int getActivity() {
         return activity;
     }
 
-    public void incrementActivity() {
-        this.activity = this.activity + 1;
+    public void setActivity(int activity) {
+        this.activity = activity;
     }
 
     public String getUsername() {

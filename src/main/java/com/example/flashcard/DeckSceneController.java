@@ -1,5 +1,6 @@
 package com.example.flashcard;
 
+import UserAdmin.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.stage.Stage;
 import models.Card;
 import models.Category;
 import models.Deck;
+import services.AdminService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,6 +26,8 @@ import java.util.ResourceBundle;
 public class DeckSceneController implements Initializable {
 
     private Deck deck;
+
+    private User user;
     private Scene previousScene;
     @FXML
     private Button CreateTfButton;
@@ -57,6 +61,15 @@ public class DeckSceneController implements Initializable {
         deckNameLabel.setText(deck.getName());
         setCards();
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(String username) {
+        this.user = AdminService.getInstance().findUser(username);
+    }
+
     public void setPreviousScene(Scene previousScene){
         this.previousScene = previousScene;
     }
@@ -105,6 +118,11 @@ public class DeckSceneController implements Initializable {
         }
         catch (Exception e)
         {}
+        if(deck.isPublic())
+        {
+            user.setContributions(user.getContributions() - 1);
+        }
+        System.out.println("Contributions appended");
     }
 
     public void goBack(ActionEvent event) throws IOException {
