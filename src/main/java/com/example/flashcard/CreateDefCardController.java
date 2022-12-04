@@ -2,7 +2,7 @@ package com.example.flashcard;
 
 import ExceptionHandling.invalidParameterException;
 import ExceptionHandling.notFXMLLoaderInstanceException;
-import UserAdmin.User;
+import user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +15,7 @@ import models.Card;
 import models.CardType;
 import models.Deck;
 import models.cardFactory.CardGenerator;
-import services.AdminService;
+import services.AdminServer;
 
 import java.io.IOException;
 
@@ -56,7 +56,7 @@ public class CreateDefCardController {
     }
 
     public void setUser(String username) {
-        this.user = AdminService.getInstance().findUser(username);
+        this.user = AdminServer.getInstance().findUser(username);
     }
 
     public  void createCard(ActionEvent event) throws invalidParameterException, notFXMLLoaderInstanceException {

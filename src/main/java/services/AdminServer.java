@@ -1,18 +1,18 @@
 package services;
 
-import UserAdmin.User;
+import user.User;
 import models.Category;
 import models.Deck;
 
 import java.util.*;
 
-public class AdminService {
-    private static AdminService instance;
+public class AdminServer {
+    private static AdminServer instance;
     private HashMap<String, String> userData;
     private HashSet<User> userList;
     private ArrayList<Category> categories;
     private ArrayList<Deck> publicDecks;
-    private AdminService() {
+    private AdminServer() {
         userData = new HashMap<>();
         userList = new HashSet<>();
         categories = new ArrayList<>();
@@ -70,9 +70,9 @@ public class AdminService {
         othello.addNewDeck(deck8);
     }
 
-    synchronized public static AdminService getInstance() {
+    synchronized public static AdminServer getInstance() {
         if(instance == null)
-            instance = new AdminService();
+            instance = new AdminServer();
 
         return instance;
     }

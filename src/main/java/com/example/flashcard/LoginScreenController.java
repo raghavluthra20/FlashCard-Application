@@ -1,6 +1,6 @@
 package com.example.flashcard;
 
-import UserAdmin.User;
+import user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import services.AdminService;
+import services.AdminServer;
 
 import java.io.IOException;
 
@@ -40,8 +40,8 @@ public class LoginScreenController {
         String username = usernameText.getText();
         String password = passwordText.getText();
         // check if user exists and password matches
-        if(AdminService.getInstance().checkLoginCredentials(username, password)) {
-            User user = AdminService.getInstance().findUser(username);
+        if(AdminServer.getInstance().checkLoginCredentials(username, password)) {
+            User user = AdminServer.getInstance().findUser(username);
             // if user is already logged in, then return
             if(user.isLoggedIn())
                 return;
@@ -59,7 +59,7 @@ public class LoginScreenController {
     public void register(ActionEvent event) {
         String username = usernameText.getText();
         String password = passwordText.getText();
-        if(!AdminService.getInstance().registerUser(username, password)) {
+        if(!AdminServer.getInstance().registerUser(username, password)) {
             errorSuccessMessage.setText("Username already taken.");
             errorSuccessMessage.setTextFill(Paint.valueOf("#ff0000")); // RED color
         } else {

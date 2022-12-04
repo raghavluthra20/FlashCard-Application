@@ -3,7 +3,7 @@ package com.example.flashcard;
 import ExceptionHandling.containerEmptyException;
 import ExceptionHandling.sceneChangeException;
 import ExceptionHandling.timerThreadException;
-import UserAdmin.User;
+import user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -15,7 +15,7 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import models.Card;
 import models.Deck;
-import services.AdminService;
+import services.AdminServer;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -62,7 +62,7 @@ public class ReviseDeckSceneController {
     }
 
     public void setUser(String username) {
-        this.user = AdminService.getInstance().findUser(username);
+        this.user = AdminServer.getInstance().findUser(username);
         user.setActivity(user.getActivity() + 1);
     }
 
