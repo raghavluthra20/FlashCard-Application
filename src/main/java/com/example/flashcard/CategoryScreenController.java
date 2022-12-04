@@ -118,11 +118,6 @@ public class CategoryScreenController implements Initializable {
 
     }
 
-
-    public void goBack(ActionEvent event) throws IOException {
-        SceneHandler.getInstance().switchToScene((Stage)((Node)event.getSource()).getScene().getWindow(),previousScene);
-    }
-
     public void createPublicDeck(ActionEvent event) {
         String name = newDeckName.getText();
         System.out.println("Create deck request public");
@@ -181,5 +176,8 @@ public class CategoryScreenController implements Initializable {
                 System.out.println("publicDeckListView Item Selected");
             }
         });
+    }
+    public void goBack(ActionEvent event) throws IOException {
+        SceneHandler.getInstance().switchToUserHomeScreen(user,(Stage)((Node)event.getSource()).getScene().getWindow(),null);
     }
 }

@@ -14,7 +14,7 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="54.0" layoutY="70.0" text="Your Decks:">
+      <Label layoutX="48.0" layoutY="70.0" text="Your Private Decks:">
          <font>
             <Font size="16.0" />
          </font>
@@ -34,7 +34,7 @@
       <TextField fx:id="newDeckName" layoutX="347.0" layoutY="44.0" prefHeight="26.0" prefWidth="189.0" promptText="Enter new Deck Name" />
       <Button fx:id="createPublicDeckButton" layoutX="344.0" layoutY="83.0" mnemonicParsing="false" onAction="#createPublicDeck" text="Create Public" />
       <Button fx:id="createPrivateDeckButton" layoutX="442.0" layoutY="83.0" mnemonicParsing="false" onAction="#createPrivateDeck" text="Create Private" />
-      <Label fx:id="deckNumber" layoutX="147.0" layoutY="71.0" text="42">
+      <Label fx:id="deckNumber" layoutX="194.0" layoutY="70.0" text="42">
          <font>
             <Font size="16.0" />
          </font>

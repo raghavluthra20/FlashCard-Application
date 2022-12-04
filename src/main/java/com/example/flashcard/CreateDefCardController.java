@@ -59,6 +59,7 @@ public class CreateDefCardController {
         System.out.println(previousScene.getUserData() instanceof FXMLLoader);//TODO: custom exception
         ((DeckSceneController)((FXMLLoader)previousScene.getUserData()).getController()).setCards();
         System.out.println("new card added in deck");
+
         goBackButton.fire();
     }
 

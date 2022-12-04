@@ -65,6 +65,10 @@ public class User implements Comparable<User> {
         return activity;
     }
 
+    public void incrementActivity() {
+        this.activity = this.activity + 1;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -94,6 +98,16 @@ public class User implements Comparable<User> {
         }
         decks.add(deck);
         return true;
+    }
+
+    public int getNumberOfPublicCards() {
+        int count = 0;
+        for(Deck deck : decks) {
+            if(deck.isPublic())
+                count = count + deck.getSize();
+        }
+
+        return count;
     }
 
     @Override

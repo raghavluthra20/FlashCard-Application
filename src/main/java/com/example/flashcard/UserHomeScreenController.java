@@ -53,6 +53,9 @@ public class UserHomeScreenController implements Initializable{
     @FXML
     private Label contributor_3;
 
+    @FXML
+    private Label categoryErrorLabel;
+
     private Scene scene;
 
     public User getUser() {
@@ -90,9 +93,12 @@ public class UserHomeScreenController implements Initializable{
     public void editCategoryList(String categoryName) {
         Category newCategory = AdminService.getInstance().createNewCategory(categoryName);
 
-        // if category already exists, then return
-        if(newCategory == null)
+        // if category already exists, show error message then return
+        if(newCategory == null) {
+            categoryErrorLabel.setVisible(true);
             return;
+        }
+        categoryErrorLabel.setVisible(false);
 
         categoryList.getItems().addAll(newCategory);
         System.out.println(AdminService.getInstance().getCategories()); //TODO:remove later!
