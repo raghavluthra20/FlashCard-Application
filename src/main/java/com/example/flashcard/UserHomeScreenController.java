@@ -59,11 +59,7 @@ public class UserHomeScreenController implements Initializable{
         return this.user;
     }
 
-    public void setUser(User user) {//TODO: link with login page
-        this.user = user;
-        setCategories();
-        setNameLabel(user.getUsername());
-
+    public void setAllContributionsAndActivity() {
         activityLabel.setText(Integer.toString(user.getActivity()));
         contributionsLabel.setText(Integer.toString(user.getContributions()));
 
@@ -72,6 +68,14 @@ public class UserHomeScreenController implements Initializable{
         contributor_1.setText("1. " + topUsers.get(0).getUsername() + ": " + Integer.toString(topUsers.get(0).getContributions()));
         contributor_2.setText("2. " + topUsers.get(1).getUsername() + ": " + Integer.toString(topUsers.get(1).getContributions()));
         contributor_3.setText("3. " + topUsers.get(2).getUsername() + ": " + Integer.toString(topUsers.get(2).getContributions()));
+    }
+
+    public void setUser(User user) {//TODO: link with login page
+        this.user = user;
+        setCategories();
+        setNameLabel(user.getUsername());
+
+        setAllContributionsAndActivity();
     }
     public void setCategories()
     {

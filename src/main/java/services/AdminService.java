@@ -79,14 +79,14 @@ public class AdminService {
     // todo: do multithreading
 
     // checks if user exists or not and if password and username match
-    public boolean checkLoginCredentials(String username, String password) {
+    synchronized public boolean checkLoginCredentials(String username, String password) {
         if(!userData.containsKey(username))
             return false;
 
         return userData.get(username).equals(password);
     }
 
-    public boolean registerUser(String username, String password) {
+    synchronized public boolean registerUser(String username, String password) {
         if(userData.containsKey(username)) {
             System.out.println("Username already taken.");
             return false;
@@ -98,7 +98,7 @@ public class AdminService {
         return true;
     }
 
-    public User findUser(String username) {
+    synchronized public User findUser(String username) {
         for(User user : userList) {
             if(user.getUsername().equals(username))
                 return user;
@@ -107,7 +107,7 @@ public class AdminService {
         return null;
     }
 
-    public Category createNewCategory(String name)
+    synchronized public Category createNewCategory(String name)
     {
         // check if category already exists
         for(Category category : categories) {
@@ -120,15 +120,11 @@ public class AdminService {
         return category;
     }
 
-    public ArrayList<Category> getCategories() {
+    synchronized public ArrayList<Category> getCategories() {
         return this.categories;
     }
 
-    public void setCategories(ArrayList<Category> categories) {
-        this.categories = categories;
-    }
-
-    public boolean registerPublicDeck(Deck deck) {
+    synchronized public boolean registerPublicDeck(Deck deck) {
         for(Deck d: publicDecks)
         {
             if(d.getCategory().getName().equals(deck.getCategory().getName()) && d.getName().equals(deck.getName()))
@@ -139,7 +135,7 @@ public class AdminService {
         return true;
     }
 
-    public ArrayList<User> getTopContributors() {
+    synchronized public ArrayList<User> getTopContributors() {
         final int contributorSize = 3;
 
         // create a list to users from hashset
@@ -158,7 +154,7 @@ public class AdminService {
         return topContributors;
     }
 
-    public ArrayList<Deck> getPublicDecks() {
+    synchronized public ArrayList<Deck> getPublicDecks() {
         return publicDecks;
     }
 }
