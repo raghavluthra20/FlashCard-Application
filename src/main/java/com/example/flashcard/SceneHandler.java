@@ -78,6 +78,7 @@ public class SceneHandler {
     }
     public void switchToDeckScreen(Stage stage, Scene previousScene, Deck deck)
     {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DeckScene.fxml"));
         Parent root = null;
         try{
@@ -88,6 +89,10 @@ public class SceneHandler {
         }//TODO: custom exception
         DeckSceneController deckSceneController = loader.getController();
         deckSceneController.setDeck(deck);
+
+        String username = stage.getTitle();
+        deckSceneController.setUser(username);
+
         deckSceneController.setPreviousScene(previousScene);
         Scene nextScene = new Scene(root);
         nextScene.setUserData(loader);
@@ -108,6 +113,10 @@ public class SceneHandler {
         }//TODO: custom exception
         ReviseDeckSceneController reviseDeckSceneController = loader.getController();
         reviseDeckSceneController.setDeck(deck,cardNumber);
+
+        String username = stage.getTitle();
+        reviseDeckSceneController.setUser(username);
+
         reviseDeckSceneController.setPreviousScene(previousScene);
         reviseDeckSceneController.setInitialCountInt(counterChange);
         Scene nextScene = new Scene(root);
@@ -127,6 +136,10 @@ public class SceneHandler {
         }//TODO: custom exception
         CreateDefCardController createDefCardController = loader.getController();
         createDefCardController.setDeck(deck);
+
+        String username = stage.getTitle();
+        createDefCardController.setUser(username);
+
         createDefCardController.setPreviousScene(previousScene);
         Scene nextScene = new Scene(root);
         stage.setScene(nextScene);
@@ -142,6 +155,11 @@ public class SceneHandler {
             throw new RuntimeException(e);
         }//TODO: custom exception
         CreateFIBCardController createFIBCardController = loader.getController();
+
+        String username = stage.getTitle();
+        createFIBCardController.setUser(username);
+
+
         createFIBCardController.setDeck(deck);
         createFIBCardController.setPreviousScene(previousScene);
         Scene nextScene = new Scene(root);
@@ -160,6 +178,11 @@ public class SceneHandler {
         }//TODO: custom exception
         CreateTfCardController createTfCardController = loader.getController();
         createTfCardController.setDeck(deck);
+
+        String username = stage.getTitle();
+        createTfCardController.setUser(username);
+
+
         createTfCardController.setPreviousScene(previousScene);
         Scene nextScene = new Scene(root);
         stage.setScene(nextScene);
@@ -176,6 +199,11 @@ public class SceneHandler {
         }//TODO: custom exception
         CreateMCQCardController createMCQCardController = loader.getController();
         createMCQCardController.setDeck(deck);
+
+        String username = stage.getTitle();
+        createMCQCardController.setUser(username);
+
+
         createMCQCardController.setPreviousScene(previousScene);
         Scene nextScene = new Scene(root);
         stage.setScene(nextScene);

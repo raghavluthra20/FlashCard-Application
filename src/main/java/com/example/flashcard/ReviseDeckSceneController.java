@@ -1,5 +1,6 @@
 package com.example.flashcard;
 
+import UserAdmin.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -11,6 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import models.Card;
 import models.Deck;
+import services.AdminService;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -51,6 +53,15 @@ public class ReviseDeckSceneController {
     private int maxCount = 20;
     private int minCount = 4;
     private Scene previousScene;
+    private User user;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(String username) {
+        this.user = AdminService.getInstance().findUser(username);
+        user.setActivity(user.getActivity() + 1);
+    }
 
     public Scene getPreviousScene() {
         return previousScene;
