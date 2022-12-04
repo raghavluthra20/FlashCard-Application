@@ -38,6 +38,16 @@ public class CategoryScreenController {
                 categoryPublicDecks.add(d);
         }
         publicDeckList.getItems().addAll(categoryPublicDecks);
+
+
+        ArrayList<Deck> privateDecks = new ArrayList<>();
+        for(Deck d : user.getDecks()) {
+            if(!d.isPublic()) {
+                if(d.getCategory().getName().equals(category.getName()))
+                    privateDecks.add(d);
+            }
+        }
+        myDeckList.getItems().addAll(privateDecks);
     }
 
     public User getUser() {
@@ -47,13 +57,6 @@ public class CategoryScreenController {
     public void setUser(User user) {
         this.user = user;
         deckNumber.setText(Integer.toString(user.getDecks().size()));
-
-        ArrayList<Deck> privateDecks = new ArrayList<>();
-        for(Deck d : user.getDecks()) {
-            if(!d.isPublic())
-                privateDecks.add(d);
-        }
-        myDeckList.getItems().addAll(privateDecks);
     }
 
     @FXML
