@@ -35,18 +35,6 @@ public class User implements Comparable<User> {
         contributions = contributions + deck.getSize();
     }
 
-    public void deleteCard(Deck deck, Card card){
-        try {
-            deck.removeCard(card);
-        } catch (Exception e) {//TODO:custom exception
-            //TODO
-        }
-    }
-    public void updateCard(Card card)
-    {
-        //TODO: set answer set question
-    }
-
 
 
     public int getContributions() {

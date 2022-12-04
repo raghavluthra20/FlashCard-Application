@@ -1,5 +1,9 @@
 package com.example.flashcard;
 
+import ExceptionHandling.containerEmptyException;
+import ExceptionHandling.invalidParameterException;
+import ExceptionHandling.noSelectionException;
+import ExceptionHandling.sceneChangeException;
 import UserAdmin.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -118,44 +122,68 @@ public class CategoryScreenController implements Initializable {
 
     }
 
-    public void createPublicDeck(ActionEvent event) {
+    public void createPublicDeck(ActionEvent event) throws invalidParameterException {
         String name = newDeckName.getText();
+        if(name.trim().isBlank())
+        {
+            throw new invalidParameterException();
+        }
         System.out.println("Create deck request public");
         Deck deck = new Deck(name, true, category);
         AdminService.getInstance().registerPublicDeck(deck);
         setDecks();
     }
 
-    public void createPrivateDeck(ActionEvent event) {
+    public void createPrivateDeck(ActionEvent event) throws invalidParameterException {
         String name = newDeckName.getText();
+        if(name.trim().isBlank())
+        {
+            throw new invalidParameterException();
+        }
         Deck deck = new Deck(name, category);
         user.addNewDeck(deck);
         setDecks();
         SetPrivateDeckNumber();
     }
 
-    public void viewDeck(ActionEvent event){
+    public void viewDeck(ActionEvent event) throws noSelectionException {
         try
         {
             Deck deck = myDeckList.getSelectionModel().getSelectedItem();
             SceneHandler.getInstance().switchToDeckScreen((Stage) myDeckList.getScene().getWindow(), myDeckList.getScene(), deck);
         }
-        catch(Exception e){System.out.println(e);}//TODO: custom exception
+        catch(Exception e){
+            throw new noSelectionException();
+        }
     }
-    public void viewPublicDeck(ActionEvent event){
-        Deck deck = publicDeckList.getSelectionModel().getSelectedItem();
-        SceneHandler.getInstance().switchToDeckScreen((Stage) publicDeckList.getScene().getWindow(),publicDeckList.getScene(),deck);
-        //TODO: custom exception
+    public void viewPublicDeck(ActionEvent event) throws noSelectionException {
+        try {
+            Deck deck = publicDeckList.getSelectionModel().getSelectedItem();
+            SceneHandler.getInstance().switchToDeckScreen((Stage) publicDeckList.getScene().getWindow(), publicDeckList.getScene(), deck);
+        }
+        catch (Exception e) {
+            throw new noSelectionException();
+        }
     }
-    public void reviseDeck(ActionEvent event){
-        Deck deck = myDeckList.getSelectionModel().getSelectedItem();
-        SceneHandler.getInstance().switchToReviseDeckScreen((Stage) myDeckList.getScene().getWindow(), myDeckList.getScene(), deck,0,0);
-        //TODO: custom exception
+    public void reviseDeck(ActionEvent event) throws noSelectionException {
+        try {
+            Deck deck = myDeckList.getSelectionModel().getSelectedItem();
+            SceneHandler.getInstance().switchToReviseDeckScreen((Stage) myDeckList.getScene().getWindow(), myDeckList.getScene(), deck, 0, 0);
+        }
+        catch (Exception e)
+        {
+            throw new noSelectionException();
+        }
     }
-    public void revisePublicDeck(ActionEvent event){
-        Deck deck = publicDeckList.getSelectionModel().getSelectedItem();
-            SceneHandler.getInstance().switchToReviseDeckScreen((Stage) myDeckList.getScene().getWindow(),myDeckList.getScene(),deck,0,0);
-        //TODO: custom exception, abhi ke liye scenehandler mein added hai
+    public void revisePublicDeck(ActionEvent event) throws noSelectionException {
+        try {
+            Deck deck = publicDeckList.getSelectionModel().getSelectedItem();
+            SceneHandler.getInstance().switchToReviseDeckScreen((Stage) myDeckList.getScene().getWindow(), myDeckList.getScene(), deck, 0, 0);
+        }
+        catch (Exception e)
+        {
+            throw new noSelectionException();
+        }
     }
 
     @Override

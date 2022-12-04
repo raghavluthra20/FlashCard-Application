@@ -9,7 +9,6 @@ public class FIBCard extends Card {
         super(question, answer, category, CardType.FIB);
     }
 
-    // TODO: avoid repetition here
 //    public String toString() {
 //        return "Card{" +
 //                "type= Fill in the blanks Card \\" +

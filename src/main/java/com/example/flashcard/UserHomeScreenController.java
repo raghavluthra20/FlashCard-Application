@@ -1,5 +1,6 @@
 package com.example.flashcard;
 
+import ExceptionHandling.sceneChangeException;
 import UserAdmin.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -73,7 +74,7 @@ public class UserHomeScreenController implements Initializable{
         contributor_3.setText("3. " + topUsers.get(2).getUsername() + ": " + Integer.toString(topUsers.get(2).getContributions()));
     }
 
-    public void setUser(User user) {//TODO: link with login page
+    public void setUser(User user) {
         this.user = user;
         setCategories();
         setNameLabel(user.getUsername());
@@ -101,7 +102,7 @@ public class UserHomeScreenController implements Initializable{
         categoryErrorLabel.setVisible(false);
 
         categoryList.getItems().addAll(newCategory);
-        System.out.println(AdminService.getInstance().getCategories()); //TODO:remove later!
+        System.out.println(AdminService.getInstance().getCategories());
     }
 
     public void logout(ActionEvent event) throws IOException {
@@ -122,13 +123,11 @@ public class UserHomeScreenController implements Initializable{
 
         editCategoryList(newCategoryName.getText());
         newCategoryName.setText("");
-        //TODO: integrate with Category class
-        //TODO: make sure ki same name waale categories na bane
     }
 
     public void openCategoryScreen(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("CategoryScreenController.fxml"));
-        Parent root = loader.load();//TODO: integrate with server
+        Parent root = loader.load();
         Scene scene1 = new Scene(root);
 
         CategoryScreenController categoryScreenController = loader.getController();
@@ -145,11 +144,14 @@ public class UserHomeScreenController implements Initializable{
             public void changed(ObservableValue<? extends Category> arg0, Category arg1, Category arg2) {
                 Category category = categoryList.getSelectionModel().getSelectedItem();
                 System.out.println("ListView Item Selected");
-                SceneHandler.getInstance().switchToCategoryScreen((Stage) categoryList.getScene().getWindow(),categoryList.getScene(),getUser(),category);
+                try {
+                    SceneHandler.getInstance().switchToCategoryScreen((Stage) categoryList.getScene().getWindow(),categoryList.getScene(),getUser(),category);
+                } catch (sceneChangeException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
         });
     }
 
 }
-//TODO: activity map top contributors my contributions integrate with gui

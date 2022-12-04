@@ -7,8 +7,6 @@ public abstract class Card {
     private final Category category;
     private final CardType cardType;
 
-    // TODO cardType
-    // TODO user
 
     public Card(String question, String answer, Category category, CardType type) {
         this.question = question;

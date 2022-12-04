@@ -27,12 +27,9 @@ public class Deck {
     }
 
     public int addCard(Card card) {
-        // TODO: if deck is public, change contributions
         if(this.cards.add(card)) {
             return card.getId();
         }
-
-        // TODO: throw custom exception
         return -1;
     }
 

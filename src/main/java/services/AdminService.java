@@ -76,7 +76,6 @@ public class AdminService {
 
         return instance;
     }
-    // todo: do multithreading
 
     // checks if user exists or not and if password and username match
     synchronized public boolean checkLoginCredentials(String username, String password) {
