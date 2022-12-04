@@ -1,13 +1,10 @@
 package UserAdmin;
 
 import models.Card;
-import models.Category;
 import models.Deck;
-import models.cardFactory.cardGenerator;
-import services.DataService;
+import services.AdminService;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class User implements Comparable<User> {
     private int contributions;
@@ -26,31 +23,13 @@ public class User implements Comparable<User> {
         this.decks = new ArrayList<>();
     }
 
-    public Card createCard(Category category)
-    {
-        //TODO: integrate with javafx
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter card type");
-        String cardType = in.nextLine();
-        System.out.println("Enter question and answer");
-        String question  = in.nextLine();
-        String answer = in.nextLine();
-        in.close();
-
-        return (new cardGenerator()).newCard(question,answer,category,cardType);
-    }
-
-    public void revise(){
-        //TODO
-    }
-
     public void makeDeckPublic(Deck deck){
         // if deck is already public, don't do anything
         if(deck.isPublic())
             return;
 
         deck.makePublic();
-        DataService.getInstance().registerPublicDeck(deck);
+        AdminService.getInstance().registerPublicDeck(deck);
 
         // update contributions
         contributions = contributions + deck.getSize();
@@ -71,6 +50,14 @@ public class User implements Comparable<User> {
 
 
     public int getContributions() {
+        int count = 0;
+        for(Deck deck : decks) {
+            if(deck.isPublic())
+                count = count + deck.getSize();
+        }
+        this.contributions = count;
+
+        System.out.println("user= " + username + ", contributions= " + contributions);
         return contributions;
     }
 
@@ -98,8 +85,15 @@ public class User implements Comparable<User> {
         return this.decks;
     }
 
-    public void addNewDeck(Deck deck) {
+    public boolean addNewDeck(Deck deck) {
+        for(Deck d : decks)
+        {
+            if(d.getCategory().getName().equals(deck.getCategory().getName()) && d.getName().equals(deck.getName())){
+                return false;
+            }
+        }
         decks.add(deck);
+        return true;
     }
 
     @Override

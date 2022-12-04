@@ -9,11 +9,11 @@ public class DefCard extends Card {
         super(question, answer, category, CardType.DEFINITION);
     }
 
-    public String toString() {
-        return "Card{" +
-                "type= Definition Card \\" +
-                "question='" + this.getQuestion() + '\'' +
-                ", answer='" + this.getAnswer() + '\'' +
-                '}';
-    }
+//    public String toString() {
+//        return "Card{" +
+//                "type= Definition Card \\" +
+//                "question='" + this.getQuestion() + '\'' +
+//                ", answer='" + this.getAnswer() + '\'' +
+//                '}';
+//    }
 }

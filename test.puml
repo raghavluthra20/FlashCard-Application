@@ -1,0 +1,346 @@
+@startuml
+class services.AdminService {
+- {static} AdminService instance
+- HashMap<String,String> userData
+- HashSet<User> userList
+- ArrayList<Category> categories
+- ArrayList<Deck> publicDecks
++ {static} AdminService getInstance()
++ boolean checkLoginCredentials(String,String)
++ boolean registerUser(String,String)
++ User findUser(String)
++ Category createNewCategory(String)
++ ArrayList<Category> getCategories()
++ void setCategories(ArrayList<Category>)
++ boolean registerPublicDeck(Deck)
++ ArrayList<User> getTopContributors()
++ ArrayList<Deck> getPublicDecks()
+}
+class com.example.flashcard.CategoryScreenController {
+- User user
+- Category category
+- TextField newDeckName
+- Button createPublicDeckButton
+- Button createPrivateDeckButton
+- ListView<Deck> myDeckList
+- ListView<Deck> publicDeckList
+- Button viewMyListButton
+- Button reviseMyDeckButton
+- Button revisePublicDeckButton
+- Label categoryNameLabel
+- Label deckNumber
+- Button goBackButton
+- Button viewPublicDeckButton
+- Scene previousScene
++ Category getCategory()
++ Scene getPreviousScene()
++ void setPreviousScene(Scene)
++ void setCategory(Category)
++ void setDecks()
++ User getUser()
++ void setUser(User)
++ void goBack(ActionEvent)
++ void createPublicDeck(ActionEvent)
++ void createPrivateDeck(ActionEvent)
++ void viewDeck(ActionEvent)
++ void viewPublicDeck(ActionEvent)
++ void reviseDeck(ActionEvent)
++ void revisePublicDeck(ActionEvent)
++ void initialize(URL,ResourceBundle)
+}
+class com.example.flashcard.UserHomeScreenController {
+- User user
+- Label nameLabel
+- Button logoutButton
+- ListView<Category> categoryList
+- TextField newCategoryName
+- Button createCategoryButton
+- Label activityLabel
+- Label contributionsLabel
+- Label contributor_1
+- Label contributor_2
+- Label contributor_3
+- Scene scene
++ User getUser()
++ void setUser(User)
++ void setCategories()
++ void setNameLabel(String)
++ void editCategoryList(String)
++ void logout(ActionEvent)
++ void createCategoryAction(ActionEvent)
++ void openCategoryScreen(ActionEvent)
++ void initialize(URL,ResourceBundle)
+}
+class models.cards.MCQCard {
+}
+class UserAdmin.User {
+- int contributions
+- int activity
+- String username
+- String password
+- boolean isLoggedIn
+- ArrayList<Deck> decks
++ void makeDeckPublic(Deck)
++ void deleteCard(Deck,Card)
++ void updateCard(Card)
++ int getContributions()
++ int getActivity()
++ String getUsername()
++ String getPassword()
++ boolean isLoggedIn()
++ void setLoggedIn(boolean)
++ ArrayList<Deck> getDecks()
++ boolean addNewDeck(Deck)
++ String toString()
++ int compareTo(User)
+}
+class com.example.flashcard.ReviseDeckSceneController {
+- TextArea answerText
+- Label counter
+- Button goBackButton
+- Button nextCardButton
+- TextArea questionText
+- Label adaptiveLabel
+- RadioButton adaptiveYesRadio
+- RadioButton adaptiveNoRadio
+- Deck deck
+- Card currentCard
+- int index
+- int counterInt
+- int counterChangeInt
+- int initialCountInt
+- int maxCount
+- int minCount
+- Scene previousScene
++ Scene getPreviousScene()
++ void setPreviousScene(Scene)
++ int getInitialCountInt()
++ int getCounterInt()
++ void setCounterInt(int)
++ void setInitialCountInt(int)
++ void startCount()
++ void showHiddenElements()
++ Deck getDeck()
++ void setDeck(Deck,int)
++ Card getCurrentCard()
++ void setCurrentCard(Card)
++ void nextCard(ActionEvent)
++ void goBack(ActionEvent)
+}
+enum models.CardType {
++  FIB
++  TF
++  DEFINITION
++  MCQ
+}
+class models.cardFactory.CardGenerator {
++ Card newCard(String,String,Category,CardType)
+}
+class com.example.flashcard.CreateFIBCardController {
+- Scene previousScene
+- Deck deck
+- TextField answerText
+- Button createCardButton
+- Button goBackButton
+- TextArea questionText
++ Scene getPreviousScene()
++ void setPreviousScene(Scene)
++ Deck getDeck()
++ void setDeck(Deck)
++ void createCard(ActionEvent)
++ void goBack(ActionEvent)
+}
+class com.example.flashcard.CreateMCQCardController {
+- Scene previousScene
+- Deck deck
+- TextArea questionText
+- String answer
+- String question
+- Button createCardButton
+- Button goBackButton
+- RadioButton optionARadio
+- RadioButton optionBRadio
+- RadioButton optionCRadio
+- RadioButton optionDRadio
+- TextField optionAText
+- TextField optionBText
+- TextField optionCText
+- TextField optionDText
++ Scene getPreviousScene()
++ void setPreviousScene(Scene)
++ Deck getDeck()
++ void setDeck(Deck)
++ void createCard(ActionEvent)
++ void writeQuestionText()
++ void writeAnswerText()
++ void goBack(ActionEvent)
+}
+class models.cards.DefCard {
+}
+class com.example.flashcard.CreateTfCardController {
+- Scene previousScene
+- Deck deck
+- RadioButton trueRadio
+- RadioButton falseRadio
+- TextArea questionText
+- Button createCardButton
+- Button goBackButton
++ Scene getPreviousScene()
++ void setPreviousScene(Scene)
++ Deck getDeck()
++ void setDeck(Deck)
++ void createCard(ActionEvent)
++ void goBack(ActionEvent)
+}
+class models.cards.TFCard {
+}
+class models.Category {
+- int id
+- ArrayList<Deck> decks
+- String name
++ int getId()
++ String getName()
++ void setName(String)
++ String toString()
+}
+class com.example.flashcard.SceneHandler {
+- {static} SceneHandler instance
++ {static} SceneHandler getInstance()
++ void launchLoginScreen(Stage)
++ void switchToUserHomeScreen(User,Stage,Scene)
++ void switchToCategoryScreen(Stage,Scene,User,Category)
++ void switchToDeckScreen(Stage,Scene,Deck)
++ void switchToReviseDeckScreen(Stage,Scene,Deck,int,int)
++ void switchToCreateDefCardScene(Stage,Scene,Deck)
++ void switchToCreateFIBCardScene(Stage,Scene,Deck)
++ void switchToCreateTfCardScene(Stage,Scene,Deck)
++ void switchToCreateMCQCardScene(Stage,Scene,Deck)
++ void switchToEditCardScene(Stage,Scene,Card)
++ void switchToScene(Stage,Scene)
+}
+class com.example.flashcard.DeckSceneController {
+- Deck deck
+- Scene previousScene
+- Button CreateTfButton
+- ListView<Card> cardList
+- Button createDefButton
+- Button createFIBButton
+- Button createMCQButton
+- Label deckNameLabel
+- Button deleteCardButton
+- Button editCardButton
+- Button goBackButton
++ void setDeck(Deck)
++ void setPreviousScene(Scene)
++ void setCards()
++ void createDefCard(ActionEvent)
++ void createFIBCard(ActionEvent)
++ void createTfCard(ActionEvent)
++ void createMCQCard(ActionEvent)
++ void editCard(ActionEvent)
++ void deleteCard(ActionEvent)
++ void goBack(ActionEvent)
++ void initialize(URL,ResourceBundle)
+}
+class models.cards.FIBCard {
+}
+class com.example.flashcard.Main {
++ {static} void main(String[])
++ void start(Stage)
+}
+class com.example.flashcard.LoginScreenController {
+- Button loginButton
+- TextField usernameText
+- TextField passwordText
+- Button quitButton
+- AnchorPane scenePane
+- Label errorSuccessMessage
+- Stage stage
+- Scene scene
+- Parent root
++ void login(ActionEvent)
++ void register(ActionEvent)
++ void quit(ActionEvent)
+}
+class com.example.flashcard.EditCardSceneController {
+- Scene previousScene
+- Card card
+- TextArea answerText
+- Button editCard
+- Button goBackButton
+- TextArea questionText
++ Scene getPreviousScene()
++ void setPreviousScene(Scene)
++ void setCard(Card)
++ String getAnswerText()
++ void setAnswerText()
++ String getQuestionText()
++ void setQuestionText()
++ void editCard(ActionEvent)
++ void goBack(ActionEvent)
+}
+abstract class models.Card {
+- int id
+- String question
+- String answer
+- Category category
+- CardType cardType
++ int getId()
++ String getQuestion()
++ void setQuestion(String)
++ String getAnswer()
++ void setAnswer(String)
++ Category getCategory()
++ CardType getCardType()
++ String toString()
+}
+class models.Deck {
+- int id
+- String name
+- boolean isPublic
+- Category category
+- ArrayList<Card> cards
++ int addCard(Card)
++ void removeCard(Card)
++ boolean isEmpty()
++ boolean containsCard(Card)
++ ArrayList<Card> getCards()
++ void setCards(ArrayList<Card>)
++ int getId()
++ int getSize()
++ String getName()
++ void setName(String)
++ Category getCategory()
++ boolean isPublic()
++ void makePublic()
++ String toString()
+}
+class com.example.flashcard.CreateDefCardController {
+- Scene previousScene
+- Deck deck
+- TextArea answerText
+- Button createCardButton
+- Button goBackButton
+- TextArea questionText
++ Scene getPreviousScene()
++ void setPreviousScene(Scene)
++ Deck getDeck()
++ void setDeck(Deck)
++ void createCard(ActionEvent)
++ void goBack(ActionEvent)
+}
+class com.example.flashcard.App {
++ {static} void main(String[])
+}
+
+
+javafx.fxml.Initializable <|.. com.example.flashcard.CategoryScreenController
+javafx.fxml.Initializable <|.. com.example.flashcard.UserHomeScreenController
+models.Card <|-- models.cards.MCQCard
+UserAdmin.Comparable <|.. UserAdmin.User
+models.Card <|-- models.cards.DefCard
+models.Card <|-- models.cards.TFCard
+javafx.fxml.Initializable <|.. com.example.flashcard.DeckSceneController
+models.Card <|-- models.cards.FIBCard
+javafx.application.Application <|-- com.example.flashcard.Main
+@enduml

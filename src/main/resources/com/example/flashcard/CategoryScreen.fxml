@@ -21,11 +21,11 @@
       </Label>
       <ListView fx:id="myDeckList" layoutX="25.0" layoutY="145.0" prefHeight="200.0" prefWidth="200.0" />
       <ListView fx:id="publicDeckList" layoutX="337.0" layoutY="145.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button fx:id="viewMyDeckButton" layoutX="25.0" layoutY="358.0" mnemonicParsing="false" text="View Deck" />
-      <Button fx:id="reviseMyDeckButton" layoutX="117.0" layoutY="358.0" mnemonicParsing="false" text="Revise" />
-      <Button fx:id="revisePublicDeckButton" layoutX="337.0" layoutY="358.0" mnemonicParsing="false" text="Revise Public Deck" />
-      <Label layoutX="27.0" layoutY="123.0" text="Select from your decks" />
-      <Label layoutX="337.0" layoutY="123.0" text="Select from other users' public decks" />
+      <Button fx:id="viewMyDeckButton" layoutX="25.0" layoutY="358.0" mnemonicParsing="false" onAction="#viewDeck" text="View Deck" />
+      <Button fx:id="reviseMyDeckButton" layoutX="117.0" layoutY="358.0" mnemonicParsing="false" onAction="#reviseDeck" text="Revise" />
+      <Button fx:id="revisePublicDeckButton" layoutX="437.0" layoutY="358.0" mnemonicParsing="false" onAction="#revisePublicDeck" text="Revise Public Deck" />
+      <Label layoutX="27.0" layoutY="123.0" text="Select from your private decks" />
+      <Label layoutX="337.0" layoutY="123.0" text="Select from public decks" />
       <Label layoutX="244.0" layoutY="44.0" text="Create Deck :">
          <font>
             <Font size="16.0" />
@@ -44,5 +44,6 @@
             <Font size="10.0" />
          </font>
       </Button>
+      <Button fx:id="viewPublicDeckButton" layoutX="323.0" layoutY="358.0" mnemonicParsing="false" onAction="#viewPublicDeck" text="View Public Deck" />
    </children>
 </AnchorPane>

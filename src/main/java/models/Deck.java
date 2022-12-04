@@ -1,8 +1,5 @@
 package models;
 
-import UserAdmin.User;
-import services.DataService;
-
 import java.util.ArrayList;
 
 public class Deck {
@@ -91,6 +88,7 @@ public class Deck {
     @Override
     public String toString() {
 //        return "Deck [name=" + name + ", cards=" + cards + "]";
-        return "Deck [name=" + name + "]";
+//        return "Deck [name=" + name + "]";
+        return  name;
     }
 }

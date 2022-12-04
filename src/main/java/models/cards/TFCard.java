@@ -12,13 +12,13 @@ public class TFCard extends Card {
         super(question, answer, category, CardType.TF);
     }
 
-    public String toString() {
-        return "Card{" +
-                "type= True/False Card \\" +
-                "question='" + this.getQuestion() + '\'' +
-                ", answer='" + this.getAnswer() + '\'' +
-                '}';
-    }
+//    public String toString() {
+//        return "Card{" +
+//                "type= True/False Card \\" +
+//                "question='" + this.getQuestion() + '\'' +
+//                ", answer='" + this.getAnswer() + '\'' +
+//                '}';
+//    }
 
 
 }

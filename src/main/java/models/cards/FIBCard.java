@@ -10,11 +10,11 @@ public class FIBCard extends Card {
     }
 
     // TODO: avoid repetition here
-    public String toString() {
-        return "Card{" +
-                "type= Fill in the blanks Card \\" +
-                "question='" + this.getQuestion() + '\'' +
-                ", answer='" + this.getAnswer() + '\'' +
-                '}';
-    }
+//    public String toString() {
+//        return "Card{" +
+//                "type= Fill in the blanks Card \\" +
+//                "question='" + this.getQuestion() + '\'' +
+//                ", answer='" + this.getAnswer() + '\'' +
+//                '}';
+//    }
 }

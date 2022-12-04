@@ -2,24 +2,25 @@ package models.cardFactory;
 
 
 import models.Card;
+import models.CardType;
 import models.Category;
 import models.cards.DefCard;
 import models.cards.FIBCard;
 import models.cards.MCQCard;
 import models.cards.TFCard;
 
-public class cardGenerator {
-    public Card newCard(String question, String answer, Category category, String cardType)
+public class CardGenerator {
+    public Card newCard(String question, String answer, Category category, CardType cardType)
     {
-        switch(cardType.toLowerCase())
+        switch(cardType)
         {
-            case "definition":
+            case DEFINITION:
                 return new DefCard(question,answer,category);
-            case "fib":
+            case FIB:
                 return new FIBCard(question,answer,category);
-            case "mcq":
+            case MCQ:
                 return new MCQCard(question, answer, category);
-            case "tf":
+            case TF:
                 return new TFCard(question, answer, category);
         }
         return null;
