@@ -3,7 +3,6 @@ package com.example.flashcard;
 import UserAdmin.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import models.Category;
-import services.DataService;
+import services.AdminService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -62,17 +61,22 @@ public class UserHomeScreenController implements Initializable{
 
     public void setUser(User user) {//TODO: link with login page
         this.user = user;
-        categoryList.getItems().addAll(DataService.getInstance().getCategories());
+        setCategories();
         setNameLabel(user.getUsername());
 
         activityLabel.setText(Integer.toString(user.getActivity()));
         contributionsLabel.setText(Integer.toString(user.getContributions()));
 
         // set top contributors
-        ArrayList<User> topUsers = DataService.getInstance().getTopContributors();
+        ArrayList<User> topUsers = AdminService.getInstance().getTopContributors();
         contributor_1.setText("1. " + topUsers.get(0).getUsername() + ": " + Integer.toString(topUsers.get(0).getContributions()));
         contributor_2.setText("2. " + topUsers.get(1).getUsername() + ": " + Integer.toString(topUsers.get(1).getContributions()));
         contributor_3.setText("3. " + topUsers.get(2).getUsername() + ": " + Integer.toString(topUsers.get(2).getContributions()));
+    }
+    public void setCategories()
+    {
+        categoryList.getItems().clear();
+        categoryList.getItems().addAll(AdminService.getInstance().getCategories());
     }
 
     public void setNameLabel(String name) {
@@ -80,14 +84,14 @@ public class UserHomeScreenController implements Initializable{
     }
 
     public void editCategoryList(String categoryName) {
-        Category newCategory = DataService.getInstance().createNewCategory(categoryName);
+        Category newCategory = AdminService.getInstance().createNewCategory(categoryName);
 
         // if category already exists, then return
         if(newCategory == null)
             return;
 
         categoryList.getItems().addAll(newCategory);
-        System.out.println(DataService.getInstance().getCategories()); //TODO:remove later!
+        System.out.println(AdminService.getInstance().getCategories()); //TODO:remove later!
     }
 
     public void logout(ActionEvent event) throws IOException {
@@ -125,7 +129,6 @@ public class UserHomeScreenController implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-//        categoryList.getItems().addAll(getUser().getCategories());
         categoryList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Category>() {
 
             @Override

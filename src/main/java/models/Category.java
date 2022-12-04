@@ -10,7 +10,7 @@ public class Category{//TODO: id
 
     public Category(String name) {
         this.name = name;
-        this.decks = new ArrayList<>();
+        decks = new ArrayList<>();
     }
 
     public int getId() {

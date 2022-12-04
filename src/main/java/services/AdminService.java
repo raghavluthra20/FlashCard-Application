@@ -1,19 +1,18 @@
 package services;
 
 import UserAdmin.User;
-import models.Card;
 import models.Category;
 import models.Deck;
 
 import java.util.*;
 
-public class DataService {
-    private static DataService instance;
+public class AdminService {
+    private static AdminService instance;
     private HashMap<String, String> userData;
     private HashSet<User> userList;
     private ArrayList<Category> categories;
     private ArrayList<Deck> publicDecks;
-    private DataService() {
+    private AdminService() {
         userData = new HashMap<>();
         userList = new HashSet<>();
         categories = new ArrayList<>();
@@ -29,7 +28,7 @@ public class DataService {
         userList.add(othello);
 
         userData.put("iago", "testing321");
-        User iago = new User("Iago", "testing321");
+        User iago = new User("iago", "testing321");
         userList.add(iago);
 
         // Create mock Categories
@@ -71,9 +70,9 @@ public class DataService {
         othello.addNewDeck(deck8);
     }
 
-    synchronized public static DataService getInstance() {
+    synchronized public static AdminService getInstance() {
         if(instance == null)
-            instance = new DataService();
+            instance = new AdminService();
 
         return instance;
     }
@@ -129,15 +128,19 @@ public class DataService {
         this.categories = categories;
     }
 
-    public void registerPublicDeck(Deck deck) {
-        if(publicDecks.contains(deck))
-            return;
+    public boolean registerPublicDeck(Deck deck) {
+        for(Deck d: publicDecks)
+        {
+            if(d.getCategory().getName().equals(deck.getCategory().getName()) && d.getName().equals(deck.getName()))
+                return false;
+        }
 
         publicDecks.add(deck);
+        return true;
     }
 
     public ArrayList<User> getTopContributors() {
-        int contributorSize = 3;
+        final int contributorSize = 3;
 
         // create a list to users from hashset
         ArrayList<User> userArrayList = new ArrayList<>(userList);

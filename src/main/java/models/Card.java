@@ -47,9 +47,10 @@ public abstract class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
-                "question='" + question + '\'' +
-                ", answer='" + answer + '\'' +
-                '}';
+//        return "Card{" +
+//                "question='" + question + '\'' +
+//                ", answer='" + answer + '\'' +
+//                '}';
+        return cardType.toString() + " : " + question;
     }
 }

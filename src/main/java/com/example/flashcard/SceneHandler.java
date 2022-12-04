@@ -6,10 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import models.Card;
 import models.Category;
-import services.DataService;
+import models.Deck;
 
 import java.io.IOException;
+
 
 public class SceneHandler {
 
@@ -44,17 +46,22 @@ public class SceneHandler {
             loader = new FXMLLoader(getClass().getResource("UserHomeScreen.fxml"));
             Parent root = loader.load();
             scene = new Scene(root);
-            ((UserHomeScreenController)loader.getController()).setUser(user);//TODO: change setUser to check if user already exists
+            UserHomeScreenController userHomeScreenController = (UserHomeScreenController) loader.getController();
+            userHomeScreenController.setUser(user);
         }
         //TODO: integrate with server (done right?)
 
         stage.setScene(scene);
+        Image icon = new Image("icon.png");
+        stage.setTitle(user.getUsername());
+        stage.getIcons().add(icon);
+        stage.setResizable(false);
         stage.show();
 
         //TODO: to make sure same user does not login more than once
     }
 
-    public void switchToCategoryScreen(Stage stage,Scene scene, User user, Category category){
+    public void switchToCategoryScreen(Stage stage,Scene previousScene, User user, Category category){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("CategoryScreen.fxml"));
         Parent root = null;
         try {
@@ -64,10 +71,131 @@ public class SceneHandler {
         }//TODO: add custom exception
         CategoryScreenController categoryScreenController = loader.getController();
         categoryScreenController.setUser(user);
-        categoryScreenController.setPreviousScene(scene);
+        categoryScreenController.setPreviousScene(previousScene);
         categoryScreenController.setCategory(category);
-        Scene sceneNext = new Scene(root);
-        stage.setScene(sceneNext);
+        Scene nextScene = new Scene(root);
+        stage.setScene(nextScene);
+    }
+    public void switchToDeckScreen(Stage stage, Scene previousScene, Deck deck)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DeckScene.fxml"));
+        Parent root = null;
+        try{
+            root = loader.load();
+        }catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }//TODO: custom exception
+        DeckSceneController deckSceneController = loader.getController();
+        deckSceneController.setDeck(deck);
+        deckSceneController.setPreviousScene(previousScene);
+        Scene nextScene = new Scene(root);
+        nextScene.setUserData(loader);
+
+        stage.setScene(nextScene);
+    }
+    public void switchToReviseDeckScreen(Stage stage, Scene previousScene,Deck deck,int cardNumber, int counterChange)
+    {
+        if(deck == null || deck.getSize() == 0)
+            return;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ReviseDeckScene.fxml"));
+        Parent root = null;
+        try{
+            root = loader.load();
+        }catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }//TODO: custom exception
+        ReviseDeckSceneController reviseDeckSceneController = loader.getController();
+        reviseDeckSceneController.setDeck(deck,cardNumber);
+        reviseDeckSceneController.setPreviousScene(previousScene);
+        reviseDeckSceneController.setInitialCountInt(counterChange);
+        Scene nextScene = new Scene(root);
+        stage.setScene(nextScene);
+
+    }
+
+    public void switchToCreateDefCardScene(Stage stage,Scene previousScene,Deck deck)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateDefCardScene.fxml"));
+        Parent root = null;
+        try{
+            root = loader.load();
+        }catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }//TODO: custom exception
+        CreateDefCardController createDefCardController = loader.getController();
+        createDefCardController.setDeck(deck);
+        createDefCardController.setPreviousScene(previousScene);
+        Scene nextScene = new Scene(root);
+        stage.setScene(nextScene);
+    }
+    public void switchToCreateFIBCardScene(Stage stage,Scene previousScene,Deck deck)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateFIBCard.fxml"));
+        Parent root = null;
+        try{
+            root = loader.load();
+        }catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }//TODO: custom exception
+        CreateFIBCardController createFIBCardController = loader.getController();
+        createFIBCardController.setDeck(deck);
+        createFIBCardController.setPreviousScene(previousScene);
+        Scene nextScene = new Scene(root);
+        stage.setScene(nextScene);
+    }
+
+    public void switchToCreateTfCardScene(Stage stage,Scene previousScene,Deck deck)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateTfCardScene.fxml"));
+        Parent root = null;
+        try{
+            root = loader.load();
+        }catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }//TODO: custom exception
+        CreateTfCardController createTfCardController = loader.getController();
+        createTfCardController.setDeck(deck);
+        createTfCardController.setPreviousScene(previousScene);
+        Scene nextScene = new Scene(root);
+        stage.setScene(nextScene);
+    }
+    public void switchToCreateMCQCardScene(Stage stage,Scene previousScene,Deck deck)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateMCQCard.fxml"));
+        Parent root = null;
+        try{
+            root = loader.load();
+        }catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }//TODO: custom exception
+        CreateMCQCardController createMCQCardController = loader.getController();
+        createMCQCardController.setDeck(deck);
+        createMCQCardController.setPreviousScene(previousScene);
+        Scene nextScene = new Scene(root);
+        stage.setScene(nextScene);
+    }
+
+    public void switchToEditCardScene(Stage stage, Scene previousScene, Card card)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("EditCardScene.fxml"));
+        Parent root = null;
+        try{
+            root = loader.load();
+        }catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }//TODO: custom exception
+        EditCardSceneController editCardSceneController = loader.getController();
+        editCardSceneController.setCard(card);
+        editCardSceneController.setPreviousScene(previousScene);
+        Scene nextScene = new Scene(root);
+        stage.setScene(nextScene);
     }
 
     public void switchToScene(Stage stage, Scene scene)
