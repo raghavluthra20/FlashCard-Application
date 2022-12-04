@@ -2,7 +2,7 @@ package models;
 
 import java.util.ArrayList;
 
-public class Category{//TODO: id
+public class Category{
 
     private int id;
     private ArrayList<Deck> decks;

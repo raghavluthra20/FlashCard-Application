@@ -1,5 +1,7 @@
 package com.example.flashcard;
 
+import ExceptionHandling.invalidParameterException;
+import ExceptionHandling.notFXMLLoaderInstanceException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,14 +63,15 @@ public class EditCardSceneController {
     }
 
     @FXML
-    public void editCard(ActionEvent event) {
+    public void editCard(ActionEvent event) throws invalidParameterException, notFXMLLoaderInstanceException {
         if(questionText.getText().isBlank() || answerText.getText().isBlank())
         {
-            return;
-        }//TODO: add custom exception
+            throw new invalidParameterException();
+        }
         card.setQuestion(getQuestionText());
         card.setAnswer(getAnswerText());
-        System.out.println(previousScene.getUserData() instanceof FXMLLoader);//TODO: custom exception
+        if(!(previousScene.getUserData() instanceof FXMLLoader))
+            throw new notFXMLLoaderInstanceException();
         ((DeckSceneController)((FXMLLoader)previousScene.getUserData()).getController()).setCards();
         System.out.println("card edited");
         goBackButton.fire();

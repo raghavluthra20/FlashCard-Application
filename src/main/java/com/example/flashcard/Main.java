@@ -21,4 +21,3 @@ public class Main extends Application {
         SceneHandler.getInstance().launchLoginScreen(stage);
     }
 }
-//TODO: add changed functionality for x button in all scenes

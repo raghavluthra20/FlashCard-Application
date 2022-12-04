@@ -1,5 +1,7 @@
 package com.example.flashcard;
 
+import ExceptionHandling.containerNotFoundException;
+import ExceptionHandling.sceneChangeException;
 import UserAdmin.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,7 +25,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class DeckSceneController implements Initializable {
+public class DeckSceneController{
 
     private Deck deck;
 
@@ -78,25 +80,20 @@ public class DeckSceneController implements Initializable {
         cardList.getItems().clear();
         cardList.getItems().addAll(cards);
     }
-    public void createDefCard(ActionEvent event)
-    {
+    public void createDefCard(ActionEvent event) throws sceneChangeException {
         SceneHandler.getInstance().switchToCreateDefCardScene((Stage)((Node)event.getSource()).getScene().getWindow(),((Node)event.getSource()).getScene(),deck);
     }
-    public void createFIBCard(ActionEvent event)
-    {
+    public void createFIBCard(ActionEvent event) throws sceneChangeException {
         SceneHandler.getInstance().switchToCreateFIBCardScene((Stage)((Node)event.getSource()).getScene().getWindow(),((Node)event.getSource()).getScene(),deck);
     }
-    public void createTfCard(ActionEvent event)
-    {
+    public void createTfCard(ActionEvent event) throws sceneChangeException {
         SceneHandler.getInstance().switchToCreateTfCardScene((Stage)((Node)event.getSource()).getScene().getWindow(),((Node)event.getSource()).getScene(),deck);
     }
-    public void createMCQCard(ActionEvent event)
-    {
+    public void createMCQCard(ActionEvent event) throws sceneChangeException {
         SceneHandler.getInstance().switchToCreateMCQCardScene((Stage)((Node)event.getSource()).getScene().getWindow(),((Node)event.getSource()).getScene(),deck);
     }
 
-    public void editCard(ActionEvent event)
-    {
+    public void editCard(ActionEvent event) throws sceneChangeException {
         if(cardList.getSelectionModel().getSelectedIndex() == -1)
         {
             return;
@@ -105,19 +102,21 @@ public class DeckSceneController implements Initializable {
         SceneHandler.getInstance().switchToEditCardScene((Stage)((Node)event.getSource()).getScene().getWindow(),((Node)event.getSource()).getScene(),card);
     }
 
-    public void deleteCard(ActionEvent event){
+    public void deleteCard(ActionEvent event) throws containerNotFoundException {
         if(cardList.getSelectionModel().getSelectedIndex() == -1)
         {
             return;
         }
         Card card = cardList.getSelectionModel().getSelectedItem();
-        try {//TODO: add custom exception
+        try {
             if(deck.containsCard(card))
                 deck.removeCard(card);
             setCards();
         }
         catch (Exception e)
-        {}
+        {
+            throw new containerNotFoundException();
+        }
         if(deck.isPublic())
         {
             user.setContributions(user.getContributions() - 1);
@@ -127,11 +126,5 @@ public class DeckSceneController implements Initializable {
 
     public void goBack(ActionEvent event) throws IOException {
         SceneHandler.getInstance().switchToScene((Stage)((Node)event.getSource()).getScene().getWindow(),previousScene);
-    }
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {//TODO
-
     }
 }

@@ -1,5 +1,7 @@
 package com.example.flashcard;
 
+import ExceptionHandling.invalidParameterException;
+import ExceptionHandling.notFXMLLoaderInstanceException;
 import UserAdmin.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -78,19 +80,19 @@ public class CreateMCQCardController {
         this.user = AdminService.getInstance().findUser(username);
     }
 
-    public  void createCard(ActionEvent event)
-    {//TODO: custom exception
+    public  void createCard(ActionEvent event) throws invalidParameterException, notFXMLLoaderInstanceException {
         writeQuestionText();
         writeAnswerText();
         if(questionText.getText().isBlank() || answer.isBlank())
         {
-            return;
+            throw new invalidParameterException();
         }
 
         Card card = (new CardGenerator()).newCard(question, answer, deck.getCategory(), CardType.MCQ);
 
         deck.addCard(card);
-        System.out.println(previousScene.getUserData() instanceof FXMLLoader);//TODO: custom exception
+        if(!(previousScene.getUserData() instanceof FXMLLoader))
+            throw new notFXMLLoaderInstanceException();
         ((DeckSceneController)((FXMLLoader)previousScene.getUserData()).getController()).setCards();
         System.out.println("new card added in deck");
         if(deck.isPublic())
@@ -101,7 +103,7 @@ public class CreateMCQCardController {
         goBackButton.fire();
     }
     public void writeQuestionText(){
-        question = questionText.getText() + "\na) " + optionAText.getText() + "\nb) " + optionAText.getText() + "\nc) " + optionAText.getText() + "\nd) " + optionAText.getText();
+        question = questionText.getText() + "\na) " + optionAText.getText() + "\nb) " + optionBText.getText() + "\nc) " + optionCText.getText() + "\nd) " + optionDText.getText();
     }
     public void writeAnswerText(){
         if(optionARadio.isSelected())

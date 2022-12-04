@@ -5,7 +5,6 @@ import models.Card;
 import models.CardType;
 import models.Category;
 
-// TODO: Use factory pattern here
 public class TFCard extends Card {
 
     public TFCard(String question, String answer, Category category) {

@@ -1,5 +1,8 @@
 package com.example.flashcard;
 
+import ExceptionHandling.containerEmptyException;
+import ExceptionHandling.sceneChangeException;
+import ExceptionHandling.timerThreadException;
 import UserAdmin.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -82,7 +85,7 @@ public class ReviseDeckSceneController {
         this.counterInt = counterInt;
     }
 
-    public void setInitialCountInt(int counterChangeInt) {
+    public void setInitialCountInt(int counterChangeInt) throws timerThreadException {
         this.counterChangeInt = counterChangeInt;
         int sumCount = this.initialCountInt + counterChangeInt;
         if(sumCount > maxCount) {
@@ -99,8 +102,7 @@ public class ReviseDeckSceneController {
         startCount();
     }
 
-    public void startCount()
-    {
+    public void startCount() throws timerThreadException {
         try {
             Timer timer = new Timer();
             TimerTask timerTask = new TimerTask() {
@@ -116,8 +118,11 @@ public class ReviseDeckSceneController {
             };
             timer.scheduleAtFixedRate(timerTask, 1000, 1000);
         }
-        catch (Exception e){}//TODO:custom Exception handling
-    }
+        catch (Exception e) {
+            throw new timerThreadException();
+            }
+
+        }
 
     public void showHiddenElements(){
         answerText.setVisible(true);
@@ -146,7 +151,7 @@ public class ReviseDeckSceneController {
         this.questionText.setText(currentCard.getQuestion());
         this.answerText.setText(currentCard.getCardType() + ":\n" + currentCard.getAnswer());
     }
-    public void nextCard(ActionEvent event){//prototype
+    public void nextCard(ActionEvent event) throws sceneChangeException, containerEmptyException, timerThreadException {//prototype
         int increment = 0;
         if(adaptiveYesRadio.isSelected())
         {
