@@ -1,8 +1,7 @@
-package UserAdmin;
+package user;
 
-import models.Card;
 import models.Deck;
-import services.AdminService;
+import services.AdminServer;
 
 import java.util.ArrayList;
 
@@ -29,7 +28,7 @@ public class User implements Comparable<User> {
             return;
 
         deck.makePublic();
-        AdminService.getInstance().registerPublicDeck(deck);
+        AdminServer.getInstance().registerPublicDeck(deck);
 
         // update contributions
         contributions = contributions + deck.getSize();

@@ -2,13 +2,9 @@ package com.example.flashcard;
 
 import ExceptionHandling.containerNotFoundException;
 import ExceptionHandling.sceneChangeException;
-import UserAdmin.User;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,14 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import models.Card;
-import models.Category;
 import models.Deck;
-import services.AdminService;
+import services.AdminServer;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 public class DeckSceneController{
 
@@ -69,7 +62,7 @@ public class DeckSceneController{
     }
 
     public void setUser(String username) {
-        this.user = AdminService.getInstance().findUser(username);
+        this.user = AdminServer.getInstance().findUser(username);
     }
 
     public void setPreviousScene(Scene previousScene){

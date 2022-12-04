@@ -1,7 +1,7 @@
 package com.example.flashcard;
 
 import ExceptionHandling.sceneChangeException;
-import UserAdmin.User;
+import user.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -14,7 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import models.Category;
-import services.AdminService;
+import services.AdminServer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -68,7 +68,7 @@ public class UserHomeScreenController implements Initializable{
         contributionsLabel.setText(Integer.toString(user.getContributions()));
 
         // set top contributors
-        ArrayList<User> topUsers = AdminService.getInstance().getTopContributors();
+        ArrayList<User> topUsers = AdminServer.getInstance().getTopContributors();
         contributor_1.setText("1. " + topUsers.get(0).getUsername() + ": " + Integer.toString(topUsers.get(0).getContributions()));
         contributor_2.setText("2. " + topUsers.get(1).getUsername() + ": " + Integer.toString(topUsers.get(1).getContributions()));
         contributor_3.setText("3. " + topUsers.get(2).getUsername() + ": " + Integer.toString(topUsers.get(2).getContributions()));
@@ -84,7 +84,7 @@ public class UserHomeScreenController implements Initializable{
     public void setCategories()
     {
         categoryList.getItems().clear();
-        categoryList.getItems().addAll(AdminService.getInstance().getCategories());
+        categoryList.getItems().addAll(AdminServer.getInstance().getCategories());
     }
 
     public void setNameLabel(String name) {
@@ -92,7 +92,7 @@ public class UserHomeScreenController implements Initializable{
     }
 
     public void editCategoryList(String categoryName) {
-        Category newCategory = AdminService.getInstance().createNewCategory(categoryName);
+        Category newCategory = AdminServer.getInstance().createNewCategory(categoryName);
 
         // if category already exists, show error message then return
         if(newCategory == null) {
@@ -102,7 +102,7 @@ public class UserHomeScreenController implements Initializable{
         categoryErrorLabel.setVisible(false);
 
         categoryList.getItems().addAll(newCategory);
-        System.out.println(AdminService.getInstance().getCategories());
+        System.out.println(AdminServer.getInstance().getCategories());
     }
 
     public void logout(ActionEvent event) throws IOException {

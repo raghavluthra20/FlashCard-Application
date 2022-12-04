@@ -1,10 +1,8 @@
 package com.example.flashcard;
 
-import ExceptionHandling.containerEmptyException;
 import ExceptionHandling.invalidParameterException;
 import ExceptionHandling.noSelectionException;
-import ExceptionHandling.sceneChangeException;
-import UserAdmin.User;
+import user.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -19,7 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import models.Category;
 import models.Deck;
-import services.AdminService;
+import services.AdminServer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -92,7 +90,7 @@ public class CategoryScreenController implements Initializable {
     }
 
     public void setDecks(){
-        ArrayList<Deck> allPublicDecks = AdminService.getInstance().getPublicDecks();
+        ArrayList<Deck> allPublicDecks = AdminServer.getInstance().getPublicDecks();
         ArrayList<Deck> categoryPublicDecks = new ArrayList<>();
         for(Deck d : allPublicDecks) {
             if(d.getCategory() == category)
@@ -130,7 +128,7 @@ public class CategoryScreenController implements Initializable {
         }
         System.out.println("Create deck request public");
         Deck deck = new Deck(name, true, category);
-        AdminService.getInstance().registerPublicDeck(deck);
+        AdminServer.getInstance().registerPublicDeck(deck);
         setDecks();
     }
 

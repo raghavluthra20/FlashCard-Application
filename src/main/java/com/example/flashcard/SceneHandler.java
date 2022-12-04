@@ -3,7 +3,7 @@ package com.example.flashcard;
 import ExceptionHandling.containerEmptyException;
 import ExceptionHandling.sceneChangeException;
 import ExceptionHandling.timerThreadException;
-import UserAdmin.User;
+import user.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
